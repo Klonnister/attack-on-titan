@@ -1,0 +1,95 @@
+@import './base.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Montserrat';
+  src: url('/fonts/Montserrat.ttf')
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-style: italic;
+  src: url('/fonts/Montserrat-Italic.ttf')
+}
+
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('/fonts/OpenSans.ttf')
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: italic;
+  src: url('/fonts/OpenSans-Italic.ttf')
+}
+
+@font-face {
+  font-family: 'Martel';
+  font-weight: normal;
+  src: url('/fonts/Martel-Black.ttf')
+}
+
+@font-face {
+  font-family: 'Martel';
+  font-weight: 200;
+  src: url('/fonts/Martel-ExtraLight.ttf')
+}
+
+@font-face {
+  font-family: 'Martel';
+  font-weight: 300;
+  src: url('/fonts/Martel-Light.ttf')
+}
+
+@font-face {
+  font-family: 'Martel';
+  font-weight: 400;
+  src: url('/fonts/Martel-Regular.ttf')
+}
+
+@font-face {
+  font-family: 'Martel';
+  font-weight: normal;
+  src: url('/fonts/Martel-Regular.ttf')
+}
+
+@font-face {
+  font-family: 'Martel';
+  font-weight: 600;
+  src: url('/fonts/Martel-SemiBold.ttf')
+}
+
+@font-face {
+  font-family: 'Martel';
+  font-weight: 700;
+  src: url('/fonts/Martel-Bold.ttf')
+}
+
+@font-face {
+  font-family: 'Martel';
+  font-weight: bold;
+  src: url('/fonts/Martel-Bold.ttf')
+}
+
+@font-face {
+  font-family: 'Martel';
+  font-weight: 800;
+  src: url('/fonts/Martel-ExtraBold.ttf')
+}
+
+@font-face {
+  font-family: 'Martel';
+  font-weight: 900;
+  src: url('/fonts/Martel-Black.ttf')
+}
+
+
+
+#app {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
