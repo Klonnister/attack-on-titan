@@ -17,7 +17,7 @@
       <HomeBody />
     </main>
     
-    <footer class="pt-28 pb-4 px-12 flex flex-col items-center gap-6 font-open">
+    <footer class="pt-28 pb-4 px-12 flex flex-col items-center gap-6">
       <button
         class="text-sm underline"
       >
@@ -36,7 +36,7 @@
         <span>Klonnister</span>
       </a>
 
-      <p class="text-xs font-open text-justify" style="text-align-last: center">This site is not official, filiate nor funded by Kodansha. It was made with the sole purpose of fun and practicing.</p>
+      <p class="text-xs text-justify last-center" >This site is not official, filiate nor funded by Kodansha. It was made with the sole purpose of fun and practicing.</p>
     </footer>
   </div>
 </template> 
