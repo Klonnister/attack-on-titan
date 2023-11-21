@@ -1,5 +1,7 @@
 <script setup>
+import useScroll from '@/composables/useScroll'
 
+const scrollToTop = useScroll
 </script>
 
 <template>
@@ -17,15 +19,16 @@
       <HomeBody />
     </main>
     
-    <footer class="pt-28 pb-4 px-12 flex flex-col items-center gap-6">
+    <footer class="pt-28 pb-4 px-10 flex flex-col items-center gap-6">
       <button
         class="text-sm underline"
+        @click="scrollToTop"
       >
         Back to top
       </button>
 
       <a
-        href="https://github.com/Klonnister/attack-on-titan"
+        href="https://github.com/Klonnister"
         class="text-xs uppercase font-montserrat flex justify-center items-center gap-2"
       >
         <img
