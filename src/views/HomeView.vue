@@ -23,7 +23,7 @@ const scrollToTop = useScroll
     
     <footer class="pt-28 pb-4 px-10 min-[450px]:px-0 flex flex-col items-center gap-6 xl:gap-5">
       <button
-        class="text-sm md:text-base underline"
+        class="text-sm md:text-base hover:lg:text-[17px] transition-all duration-300 ease-in-out underline"
         @click="scrollToTop"
       >
         Back to top
@@ -31,7 +31,7 @@ const scrollToTop = useScroll
 
       <a
         href="https://github.com/Klonnister"
-        class="text-xs md:text-sm lg:text-base uppercase font-montserrat flex justify-center items-center gap-2 md:gap-4"
+        class="text-xs md:text-sm lg:text-base hover:lg:text-[17px] transition-all duration-300 ease-in-out uppercase font-montserrat flex justify-center items-center gap-2 md:gap-4"
       >
         <img
           src="/github.png"
