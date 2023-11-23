@@ -28,15 +28,11 @@ export const homeLinks = [
 const links = [
     {
         name: 'Home',
+        id: 'home',
         url: '/'
     },
 
     ...homeLinks,
-
-    {
-        name: 'About',
-        url: '/'
-    }
 ]
 
 export default links
