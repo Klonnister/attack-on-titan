@@ -16,7 +16,7 @@ const useHomeLinks = homeLinks
                 class="w-full sm:w-72 md:w-80 lg:w-96 2xl:w-[25rem] xl:w-80 mb-12 sm:mb-0 sm:ms-7 lg:ms-10 2xl:ms-20 sm:float-right sm:py-2"
             >
 
-            <p class="px-10 min-[450px]:px-0 mb-10 sm:mb-6 md:mb-8">
+            <p class="mb-10 sm:mb-6 md:mb-8">
                 Attack on Titan (Japanese: 進撃の巨人, Hepburn: Shingeki no Kyojin 'The Attacking Giant') is a Japanese manga series written and illustrated by 
 
                 <a
@@ -28,11 +28,11 @@ const useHomeLinks = homeLinks
                 .
             </p>
     
-            <p class="px-10 min-[450px]:px-0 mb-10 sm:mb-6 md:mb-8">
+            <p class="mb-10 sm:mb-6 md:mb-8">
                 It is set in a post-apocalyptic world where the remains of humanity live behind walls protecting them from giant humanoid Titans, Attack on Titan follows protagonist Eren Yeager, along with friends Mikasa Ackerman and Armin Arlert. When a Colossal Titan breaches the wall of their hometown, Titans destroy the city and eat Eren's mother. Vowing vengeance, Eren joins the elite Survey Corps, a group of soldiers who fight against Titans. It chronicles Eren's journey with the Survey Corps as they fight against the Titans while investigating their origin and history.
             </p>
 
-            <p class="px-10 min-[450px]:px-0">
+            <p>
                 An anime television series was produced by Wit Studio (seasons 1-3) and MAPPA (season 4). The series premiered on April 7, 2013, and concluded on November 5, 2023.  In North America, the series has been streamed on Crunchyroll, Funimation, and Hulu. Attack on Titan has also aired on Adult Swim's Toonami programming block in the United States.
             </p>
         </div>
@@ -59,7 +59,7 @@ const useHomeLinks = homeLinks
             </p>
         </div>
 
-        <div class="my-12 sm:my-16 lg:my-20 px-10 min-[450px]:px-0 text-center flex flex-col gap-8">
+        <div class="my-12 sm:my-16 lg:my-20 text-center flex flex-col gap-8">
             
             <h2 class="font-montserrat font-bold text-xl md:text-2xl text-[#D8D8D8] uppercase">What you'll find here</h2>
             <p class="text-sm md:text-base text-justify leading-8 sm:leading-9 md:leading-10 sm:text-center">Select one of the options below to start browsing. If you haven't watched the anime series and are planning to, you might get 'spoilers' in these sections, so beware.</p>
@@ -71,7 +71,7 @@ const useHomeLinks = homeLinks
                     :to="link.url"
                 >
                     <div
-                      :class="`w-full sm:h-36 md:h-48 lg:h-56 hover:lg:h-60 xl:h-44 hover:xl:h-[11.5rem] bg-no-repeat bg-cover bg-center rounded-3xl mb-3 transition-all duration-500 ease-out ${link.id}`"
+                      :class="`w-full h-48 sm:h-36 md:h-48 lg:h-56 hover:lg:h-60 xl:h-44 hover:xl:h-[11.5rem] bg-no-repeat bg-cover bg-center rounded-3xl mb-3 transition-all duration-500 ease-out ${link.id}`"
                       alt=""
                     ></div>
                     <p class="text-[13px] min-[475px]:text-sm xl:text-base font-montserrat uppercase font-semibold">{{ link.name }}</p>
@@ -79,7 +79,7 @@ const useHomeLinks = homeLinks
             </div>
         </div>
 
-        <div class="my-8 xl:my-12 px-10 min-[450px]:px-0 text-center flex flex-col gap-6 text-sm md:text-base text-justify leading-8 sm:leading-9 md:leading-10">
+        <div class="my-8 xl:my-12 text-center flex flex-col gap-6 text-sm md:text-base text-justify leading-8 sm:leading-9 md:leading-10">
             <h2 class="font-montserrat font-bold text-center text-xl text-[#D8D8D8] uppercase">Where to watch</h2>
 
             <div class="my-8 md:my-12 xl:my-16 flex justify-center items-center gap-6 sm:gap-12 lg:gap-20 xl:gap-24">
