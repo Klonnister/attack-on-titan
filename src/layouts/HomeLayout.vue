@@ -14,9 +14,13 @@ const scrollToTop = useScroll
         alt="Attack on titan"
         class="w-36 min-[350px]:w-40 sm:w-72 lg:w-80"
       >
-      <p class="text-xs sm:text-sm lg:text-base font-montserrat font-semibold uppercase absolute right-0 text-[#D8D8D8]">
+      
+      <router-link
+        class="text-xs sm:text-sm lg:text-base font-montserrat font-semibold uppercase absolute right-0 text-[#D8D8D8] hover:text-[#FFFFFF] hover:-translate-y-0.5 transition-all duration-300 ease-in-out"
+        :to="{ name: 'about' }"
+      >
         About
-      </p>
+      </router-link>
     </header>
 
     <slot/>
