@@ -7,7 +7,7 @@ const scrollToTop = useScroll
 
 <template>
 
-<div class="my-8 lg:my-12 max-w-[450px] px-10 lg:px-20 xl:px-32 sm:container mx-auto">
+<div class="my-8 lg:my-12 max-w-[450px] px-12 lg:px-20 xl:px-32 sm:container mx-auto">
     <header class="flex items-center justify-center relative">
       <img
         src="/title.png"

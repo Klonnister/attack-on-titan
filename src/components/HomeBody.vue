@@ -7,7 +7,7 @@ const useHomeLinks = homeLinks
 <template>
     <div class="flex flex-col">
         
-        <h1 class="mt-12 sm:mt-16 lg:mt-20 text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center">Shingeki no Kyojin</h1>
+        <h1 class="mt-12 sm:mt-16 lg:mt-20 text-xl sm:text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center">Shingeki no Kyojin</h1>
 
         <div class="my-10 sm:my-16 text-sm md:text-base text-justify leading-8 sm:leading-9 md:leading-10">
             <img
@@ -80,7 +80,7 @@ const useHomeLinks = homeLinks
         </div>
 
         <div class="my-8 xl:my-12 text-center flex flex-col gap-6 text-sm md:text-base text-justify leading-8 sm:leading-9 md:leading-10">
-            <h2 class="font-montserrat font-bold text-center text-xl text-[#D8D8D8] uppercase">Where to watch</h2>
+            <h2 class="font-montserrat font-bold text-center text-xl md:text-2xl text-[#D8D8D8] uppercase">Where to watch</h2>
 
             <div class="my-8 md:my-12 xl:my-16 flex justify-center items-center gap-6 sm:gap-12 lg:gap-20 xl:gap-24">
                 <a href="https://www.crunchyroll.com/es-es/series/GR751KNZY/attack-on-titan">
