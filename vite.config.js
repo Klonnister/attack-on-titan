@@ -9,7 +9,7 @@ export default defineConfig({
   plugins: [
     vue(),
     Components({
-      dirs: ['src/components'],
+      dirs: ['src/components', 'src/layouts'],
       extensions: ['vue'],
       deep: true,
       dts: false,
