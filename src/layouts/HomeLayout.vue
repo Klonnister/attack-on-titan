@@ -18,7 +18,7 @@
 
     <slot/>
 
-    <MainFooter />
+    <MainFooter class="pt-28" />
 
   </div>
 

@@ -3,7 +3,7 @@ export const homeLinks = [
         name: 'Characters',
         id: 'characters',
         img: '/characters.gif',
-        url: '/',
+        url: { name: 'characters' },
     },
     {
         name: 'Episodes',

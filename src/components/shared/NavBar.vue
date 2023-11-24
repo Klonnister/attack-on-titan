@@ -29,7 +29,7 @@ const useLinks = links
                         v-for="link in useLinks"
                         :key="link.id"
                         :to="link.url"
-                        class="font-montserrat uppercase font-semibold hover:text-[#FFFFFF] transition-all ease-in-out duration-300"
+                        class="font-montserrat uppercase font-semibold hover:text-[#FFFFFF] border-b border-[#000000] transition-all ease-in-out duration-100"
                     >
                         {{ link.name }}
                     </router-link>
@@ -38,7 +38,7 @@ const useLinks = links
 
             <router-link
                 :to="{ name: 'about' }"
-                class="hidden lg:block font-montserrat uppercase font-semibold hover:text-[#FFFFFF] transition-all ease-in-out duration-300"
+                class="hidden lg:block font-montserrat uppercase font-semibold hover:text-[#FFFFFF] transition-all ease-in-out duration-100 border-b border-[#000000]"
             >
                 About
             </router-link>
