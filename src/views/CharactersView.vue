@@ -3,6 +3,6 @@
 
 <template>
     
-    <h1>hola</h1>
+    <h1>Characters</h1>
     
 </template>

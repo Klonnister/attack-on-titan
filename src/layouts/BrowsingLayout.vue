@@ -1,26 +1,18 @@
 <script setup>
-// import { useRouter, RouterView } from 'vue-router';
-// import { ref, watch } from 'vue'
+import useViewStore from '@/stores/viewStore'
 
-// const router = useRouter();
-
-// const url = ref(router.currentRoute.value.name)
-
-// watch( url, ( newRoute ) => {  
-//     url.value = newRoute
-// } )
-
+const viewStore = useViewStore()
 </script>
 
 <template>
 
-    <div class="min-h-screen py-8 lg:py-12 max-w-[450px] px-12 lg:px-20 xl:px-32 sm:container mx-auto flex flex-col">
+    <div class="min-h-screen py-8 lg:py-12 max-w-[450px] px-12 lg:px-20 xl:px-32 sm:container mx-auto flex flex-col justify-between">
 
         <NavBar />
 
         <RouterView />
 
-        <MainFooter />
+        <MainFooter v-if="viewStore.showFooter" />
 
 
     </div>

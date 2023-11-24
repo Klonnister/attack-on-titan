@@ -5,7 +5,7 @@ const scrollToTop = useScroll
 </script>
 
 <template>
-    <footer class="pb-4 flex flex-col items-center gap-6 xl:gap-5">
+    <footer class="pb-4 flex flex-col items-center gap-4">
         <button
           class="text-sm md:text-base hover:lg:text-[17px] transition-all duration-300 ease-in-out underline"
           @click="scrollToTop"
@@ -20,7 +20,7 @@ const scrollToTop = useScroll
             <img
               src="/github.png"
               alt=""
-              class="w-8 md:w-10"
+              class="w-8"
             >
 
             <span>Klonnister</span>
