@@ -1,3 +1,20 @@
+<script setup>
+import { onBeforeMount, onBeforeUnmount } from 'vue';
+
+import useViewStore from '@/stores/viewStore'
+
+const viewStore = useViewStore()
+
+onBeforeMount(() => {
+    viewStore.showFooter = false
+})
+
+onBeforeUnmount(() => {
+    viewStore.showFooter = true
+})
+
+</script>
+
 <template>
     <div class="grow flex flex-col justify-center">
         <h1 class="text-xl sm:text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">About</h1>
