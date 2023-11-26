@@ -6,7 +6,7 @@ const useLinks = links
 </script>
 
 <template>
-    <header>
+    <header class="mb-10">
         <nav class="relative w-full flex justify-center lg:justify-between items-center">
             <button class="absolute left-0">
                 <Icon
