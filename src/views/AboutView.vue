@@ -32,6 +32,6 @@ onBeforeUnmount(() => {
     <img
       src="/about.png"
       alt=""
-      class="absolute bottom-0 right-0 w-48 min-[360px]:w-56 sm:w-72 lg:w-80 2xl:w-[30rem]"
+      class="absolute bottom-0 right-0 w-44 min-[360px]:w-56 sm:w-72 lg:w-80 2xl:w-[30rem]"
     >
 </template>

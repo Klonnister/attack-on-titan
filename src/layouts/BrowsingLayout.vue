@@ -10,7 +10,9 @@ const viewStore = useViewStore()
 
         <NavBar />
 
-            <RouterView />
+            <div class="grow py-10 flex items-center">
+                <RouterView />
+            </div>
 
         <MainFooter v-if="viewStore.showFooter" />
 
