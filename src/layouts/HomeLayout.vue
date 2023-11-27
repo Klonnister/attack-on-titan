@@ -5,7 +5,7 @@
       <img
         src="/title.png"
         alt="Attack on titan"
-        class="w-36 min-[350px]:w-40 sm:w-72 lg:w-80"
+        class="w-36 sm:w-72 lg:w-80"
       >
       
       <router-link

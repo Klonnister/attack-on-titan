@@ -21,7 +21,7 @@ if( props.img ) {
           v-if="props.img"
           :src="fixedLink"
           alt=""
-          :class="props.status === 'Deceased' ? 'grayscale px-2' : ' px-2'"
+          :class="props.status === 'Deceased' ? 'grayscale px-2 rounded-md' : 'px-2 rounded-md'"
         >
 
         <div
@@ -31,6 +31,6 @@ if( props.img ) {
             <p class="text-sm font-martel">No image</p>
         </div>
 
-        <p class="text-xs font-martel">{{ props.name }}</p>
+        <p class="text-xs font-martel text-center">{{ props.name }}</p>
     </div>
 </template>
