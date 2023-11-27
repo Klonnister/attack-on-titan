@@ -100,7 +100,6 @@ body {
   min-height: 100vh;
   background-color: #000000;
   color: #C0C1C3;
-  scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
