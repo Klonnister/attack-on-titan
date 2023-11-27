@@ -10,7 +10,7 @@ const viewStore = useViewStore()
 
         <NavBar />
 
-            <div class="grow py-10 flex items-center">
+            <div class="grow pt-10 py-16 flex items-center">
                 <RouterView />
             </div>
 
