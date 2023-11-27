@@ -1,34 +1,141 @@
 <script setup>
-import useCharactersStore from '@/stores/charactersStore.js'
-import { ref } from 'vue'
+import useFiltersList from '@/composables/useFiltersList';
+import { ref, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 import Dropdown from 'primevue/dropdown';
+import Paginator from 'primevue/paginator';
+import { scrollToTopRough } from '@/composables/useScroll'
 
-const charactersStore = useCharactersStore();
-
-const loading = ref(true);
-const showFilters = ref( false );
+// Response data
 const characters = ref(null);
+const pagesInfo = ref(null);
 
+// Filters variables
+const filtersList = useFiltersList;
+const showFilters = ref( false );
+const search = ref('')
+const gender = ref(null);
+const status = ref(null);
+const occupation = ref(null);
+
+// Paginator variables
+const newPage = ref(1)
+const firstItem = ref(0)
+
+// Additional
+const loading = ref(true);
+
+
+// Characters request to API
 const getCharacters = async () => {
     loading.value = true;
+    const queries = ref('');
 
-    const response = await fetch('https://api.attackontitanapi.com/characters').then( r => r.json() );
+    if ( newPage.value ) {
+        if( queries.value.startsWith('?') ) {
+            queries.value = queries.value + '&page=' + newPage.value;
+        } else {
+            queries.value = `?page=${newPage.value}`
+        }
+    }
+
+    if ( search.value ) {
+        if( queries.value.startsWith('?') ) {
+            queries.value = queries.value + '&name=' + search.value.toLowerCase();
+        } else {
+            queries.value = `?name=${search.value.toLowerCase()}`
+        }
+    }
+
+    if ( gender.value ) {
+        if( queries.value.startsWith('?') ) {
+            queries.value = queries.value + '&gender=' + gender.value.toLowerCase();
+        } else {
+            queries.value = `?gender=${gender.value.toLowerCase()}`
+        }
+    }
+
+    if ( status.value ) {
+        if( queries.value.startsWith('?') ) {
+            queries.value = queries.value + '&status=' + status.value.toLowerCase();
+        } else {
+            queries.value = `?status=${status.value.toLowerCase()}`
+        }
+    }
+
+    if ( occupation.value ) {
+        if( queries.value.startsWith('?') ) {
+            queries.value = queries.value + '&occupation=' + occupation.value.toLowerCase();
+        } else {
+            queries.value = `?occupation=${occupation.value.toLowerCase()}`
+        }
+    }
+    
+    const response = await fetch(`https://api.attackontitanapi.com/characters${queries.value}`).then( r => r.json() );
 
     characters.value = response.results;
+    pagesInfo.value = response.info;
     loading.value = false;
-
-    characters.value.forEach( character => {
-        if( !charactersStore.occupations.includes( character.occupation ) ) {
-            charactersStore.occupations.push( character.occupation );
-        }
-    })
+    scrollToTopRough();
 }
 
 getCharacters();
 
+watch(gender, ( newGender ) => {
+    if( newGender === 'All' ) {
+        gender.value = null
+    }
+
+    newPage.value = 1;
+    firstItem.value = 0
+    getCharacters();
+})
+
+watch(status, ( newStatus ) => {
+    if( newStatus === 'All' ) {
+        status.value = null
+    }
+
+    newPage.value = 1;
+    firstItem.value = 0
+    getCharacters();
+})
+
+watch(occupation, ( newOccupation ) => {
+    if( newOccupation === 'All' ) {
+        occupation.value = null
+    }
+
+    newPage.value = 1;
+    firstItem.value = 0
+    getCharacters();
+})
+
+const searchCharacter = () => {
+    newPage.value = 1;
+    firstItem.value = 0;
+
+    getCharacters();
+}
+
+const onPaginate = ( event ) => {
+    newPage.value = event.page + 1;
+    firstItem.value = event.first;
+
+    getCharacters();
+}
+
 const toggleShowFilters = () => {
     showFilters.value = !showFilters.value
+}
+
+const clearFilters = () => {
+    search.value = ''
+    gender.value = null;
+    status.value = null;
+    occupation.value = null;
+    newPage.value = 1;
+    getCharacters();
 }
 
 
@@ -41,11 +148,16 @@ const toggleShowFilters = () => {
 
         <div class="w-full flex mb-2">
             <input
+              v-model="search"
               type="search"
               placeholder="Buscar por nombre..."
-              class="grow py-3 bg-[#131313] px-4 rounded-s-lg"
+              class="grow py-3 bg-[#202020] px-4 rounded-s-lg text-sm"
+              @keyup.enter="searchCharacter"
             >
-            <button class="bg-[#131313] px-2 rounded-e-lg">
+            <button
+              class="bg-[#202020] px-3 rounded-e-lg border-s border-s-2 border-[#000000]"
+              @click="searchCharacter"
+            >
                 <Icon
                   icon="bx:search-alt-2"
                   class="w-6 h-6"
@@ -53,56 +165,94 @@ const toggleShowFilters = () => {
             </button>
         </div>
 
-        <!-- <div class="w-full flex justify-center mb-2">
-            <button
-              class="underline px-2 rounded-lg"
-              @click="toggleShowFilters"
-            >
-                {{ showFilters ? 'Hide Filters' : 'Show Filters'  }} 
-            </button>
-        </div> -->
+        <div>
+            <div class="flex flex-wrap gap-2" v-if="showFilters">
+                <Dropdown
+                  v-model="gender"
+                  :options="filtersList.gendersList"
+                  placeholder="Gender"
+                  class="grow md:w-14rem rounded-lg"
+                  :loading="loading"
+                />
+    
+                <Dropdown
+                  v-model="status"
+                  :options="filtersList.statusList"
+                  placeholder="Status"
+                  class="grow md:w-14rem rounded-lg"
+                  :loading="loading"
+                />
+    
+                <Dropdown
+                  v-model="occupation"
+                  :options="filtersList.occupationsList"
+                  placeholder="Organization"
+                  class="w-full md:w-14rem rounded-lg"
+                  :loading="loading"
+                />
+            </div>
+            
+            <div class="w-full flex justify-center gap-2 mb-2">
+                <button
+                  class="px-2 py-1 my-2 rounded-lg text-sm"
+                  @click="toggleShowFilters"
+                >
+                    {{ showFilters ? 'Hide Filters' : 'Show Filters'  }} 
+                </button>
+    
+                <button
+                  class="px-2 py-1 my-2 rounded-lg text-sm bg-gray-800"
+                  @click="clearFilters"
+                  v-if="gender || status || occupation || search"
+                >
+                    Clear filters
+                </button>
+            </div>
+        </div>
+        
 
-        <div class="flex flex-wrap gap-2" v-if="showFilters">
-            <Dropdown
-              v-model="charactersStore.gender"
-              :options="['All genders', 'Male', 'Female']"
-              placeholder="Gender"
-              class="grow md:w-14rem rounded-lg"
-              :loading="loading"
-            />
+        <div v-if="!loading && characters" class="flex flex-col">
+            <div class="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-10">
+                <CharacterCard 
+                    v-for="character in characters"
+                    :key="character.id"
+                    :name="character.name"
+                    :img="character.img || '' "
+                    :status="character.status"
+                />
+            </div>
 
-            <Dropdown
-              v-model="charactersStore.status"
-              :options="['All status', 'Alive', 'Deceased', 'Unknown']"
-              placeholder="Status"
-              class="grow md:w-14rem rounded-lg"
-              :loading="loading"
-            />
-
-            <Dropdown
-              v-model="charactersStore.occupation"
-              :options="charactersStore.occupations"
-              placeholder="Organization"
-              class="w-full md:w-14rem rounded-lg"
-              :loading="loading"
-            />
+            <div class="card">
+                <Paginator
+                    :template="{
+                        '640px': 'PrevPageLink CurrentPageReport NextPageLink',
+                        '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
+                        '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
+                        default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown JumpToPageInput'
+                    }"
+                    :rows="20"
+                    :totalRecords="pagesInfo.count"
+                    v-model:first="firstItem"
+                    @page="onPaginate"
+                    >
+                </Paginator>
+            </div>
         </div>
 
-        <div v-if="!loading" class="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-10">
-            <CharacterCard 
-                v-for="character in characters"
-                :key="character.id"
-                :name="character.name"
-                :img="character.img || '' "
-                :status="character.status"
-            />
+        
+
+        <div
+          class="w-full py-20 flex justify-center font-montserrat text-lg "
+          v-else-if="loading"
+        >
+            Loading...
         </div>
 
         <div
-            class="grow"
-            v-else
-            >
-                Loading...
+          class="w-full py-28 flex justify-center font-montserrat text-lg "
+          v-else
+        >
+            No results found
         </div>
     </div>
     
@@ -111,13 +261,23 @@ const toggleShowFilters = () => {
 <style>
 .p-inputtext {
     padding: 0.5rem 1rem;
+    font-size: 14px;
 }
 
 .p-dropdown {
-    background-color: #131313;
+    background-color: #202020;
 }
 
 .p-dropdown-item {
     padding: 0.5rem 1rem;
+    font-size: 14px;
+}
+
+.p-paginator-current {
+    font-size: 14px;
+}
+
+.p-paginator {
+    padding: 0.25px 0;
 }
 </style>
