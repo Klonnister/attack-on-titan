@@ -146,12 +146,12 @@ const clearFilters = () => {
     <div class="w-full">
         <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">Characters</h2>
 
-        <div class="w-full flex mb-2">
+        <div class="mx-auto w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl flex mb-2">
             <input
               v-model="search"
               type="search"
               placeholder="Buscar por nombre..."
-              class="grow py-3 bg-[#202020] px-4 rounded-s-lg text-sm"
+              class="grow py-3 bg-[#202020] px-4 rounded-s-lg text-sm lg:text-base"
               @keyup.enter="searchCharacter"
             >
             <button
@@ -166,12 +166,12 @@ const clearFilters = () => {
         </div>
 
         <div>
-            <div class="flex flex-wrap gap-2" v-if="showFilters">
+            <div class="flex justify-center flex-wrap gap-2 md:max-w-lg lg:max-w-xl xl:max-w-2xl md:mx-auto" v-if="showFilters">
                 <Dropdown
                   v-model="gender"
                   :options="filtersList.gendersList"
                   placeholder="Gender"
-                  class="grow md:w-14rem rounded-lg"
+                  class="grow md:min-w-sm rounded-lg"
                   :loading="loading"
                 />
     
@@ -179,7 +179,7 @@ const clearFilters = () => {
                   v-model="status"
                   :options="filtersList.statusList"
                   placeholder="Status"
-                  class="grow md:w-14rem rounded-lg"
+                  class="grow rounded-lg"
                   :loading="loading"
                 />
     
@@ -187,7 +187,7 @@ const clearFilters = () => {
                   v-model="occupation"
                   :options="filtersList.occupationsList"
                   placeholder="Organization"
-                  class="w-full md:w-14rem rounded-lg"
+                  class="w-full md:w-max md:grow md:w-14rem rounded-lg"
                   :loading="loading"
                 />
             </div>
@@ -201,7 +201,7 @@ const clearFilters = () => {
                 </button>
     
                 <button
-                  class="px-2 py-1 my-2 rounded-lg text-sm bg-gray-800"
+                  class="px-2 py-1 my-2 rounded-lg text-sm"
                   @click="clearFilters"
                   v-if="gender || status || occupation || search"
                 >
@@ -212,7 +212,7 @@ const clearFilters = () => {
         
 
         <div v-if="!loading && characters" class="flex flex-col">
-            <div class="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-10">
+            <div class="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-10 2xl:gap-16">
                 <CharacterCard 
                     v-for="character in characters"
                     :key="character.id"
@@ -222,18 +222,19 @@ const clearFilters = () => {
                 />
             </div>
 
-            <div class="card">
+            <div class="card md:mx-auto">
                 <Paginator
                     :template="{
                         '640px': 'PrevPageLink CurrentPageReport NextPageLink',
                         '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
                         '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-                        default: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink JumpToPageDropdown JumpToPageInput'
                     }"
                     :rows="20"
                     :totalRecords="pagesInfo.count"
                     v-model:first="firstItem"
+                    :pageLinkSize="7"
                     @page="onPaginate"
+                    class="md:max-w-2xl"
                     >
                 </Paginator>
             </div>
@@ -278,6 +279,16 @@ const clearFilters = () => {
 }
 
 .p-paginator {
-    padding: 0.25px 0;
+    padding: 1px 16px;
 }
+
+.p-highlight {
+    color: #FFFFFF;
+    background-color: #303030;
+}
+
+.paginator-page {
+    color: #C0C1C3;
+}
+
 </style>
