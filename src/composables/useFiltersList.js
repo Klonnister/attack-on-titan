@@ -36,7 +36,7 @@ const useFiltersLists = {
     gendersList: ['All', 'Male', 'Female', 'Unknown', 'Ambiguous[9]'],
 
     statusList: ['All', 'Alive', 'Deceased', 'Unknown'],
-
+    
 }
 
 export default useFiltersLists

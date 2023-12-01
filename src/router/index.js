@@ -29,12 +29,27 @@ const router = createRouter({
         {
           path: 'characters',
           name: 'characters',
-          component: () => import('../views/CharactersView.vue')
+          component: () => import('../views/CharactersView.vue'),
+        },
+        {
+          path: 'characters/:id',
+          name: 'character-id',
+          component: () => import('../views/CharacterIdView.vue'),
+          props: ( route ) => {
+            const id = Number( route.params.id )
+            return { id }
+          }
+        },
+
+
+
+        {
+          path: '/:pathMatch(.*)*',
+          name: 'not-found',
+          component: () => import('../views/NotFound.vue')
         }
       ]
     },
-
-
   ]
 })
 
