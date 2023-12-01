@@ -1,19 +1,19 @@
 <script setup>
 import { ref } from 'vue';
+import fixLink from '@/composables/useFixLink';
 
 const props = defineProps({
     name: { type: String, required: true },
     img: { type: String, required: true },
-    status: { type: String, required: true },
+    status: String,
 })
 
 const fixedLink = ref(null);
 
-if ( props.name === 'Muller' ) {
-    fixedLink.value = null;
-}
-else if( props.img ) {
-    fixedLink.value = props.img.slice(0, (props.img.indexOf('revision') - 1));
+if( props.img ) {
+    if ( props.name !== 'Muller' ) {
+        fixedLink.value = fixLink( props.img );
+    }
 }
 
 </script>
@@ -24,7 +24,9 @@ else if( props.img ) {
           v-if="fixedLink"
           :src="fixedLink"
           alt=""
-          :class="props.status === 'Deceased' ? 'grayscale px-2 rounded-md grow' : 'px-2 rounded-md grow'"
+          :class="props.status === 'Deceased' 
+            ? 'grayscale px-2 rounded-md grow'
+            : 'px-2 rounded-md grow'"
         >
 
         <div
