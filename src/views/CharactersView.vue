@@ -143,7 +143,7 @@ const clearFilters = () => {
 
 <template>
     
-    <div class="w-full">
+    <div class="w-full my-10">
         <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">Characters</h2>
 
         <div class="mx-auto w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl flex mb-2">
@@ -213,7 +213,7 @@ const clearFilters = () => {
         
 
         <div v-if="!loading && characters" class="flex flex-col">
-            <div class="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10 sm:gap-12 2xl:gap-16">
+            <div class="py-10 lg:py-20 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10 sm:gap-12 2xl:gap-16">
                 <router-link
                     v-for="character in characters"
                     :key="character.id"

@@ -13,7 +13,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <ul class="w-full grid grid-cols-2 gap-2 text-xs md:text-sm w-full">
+    <ul class="w-full grid grid-cols-2 gap-2 text-xs md:text-sm lg:text-base">
         <li class="flex flex-col px-3.5 py-3 md:py-4 bg-[#202020] text-center justify-center">
             <p>Gender:</p>
             <p class="text-white">{{ props.gender === 'Ambiguous[9]' ? 'Ambiguous' : props.gender }}</p>

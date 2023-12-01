@@ -19,7 +19,7 @@ const closeMenu = () => {
 
 <template>
     <header>
-        <nav class="w-full flex justify-between items-center">
+        <nav class="w-full flex justify-between items-center 2xl:px-4">
 
             <div
               class="absolute left-0 top-0 w-full transition-all ease-in-out duration-200 lg:-translate-y-full"
@@ -83,12 +83,12 @@ const closeMenu = () => {
             </router-link>
 
             <button
-              class="left-0"
+              class="left-0 lg:hidden"
               @click="openMenu"
             >
                 <Icon
                     icon="ooui:menu"
-                    class="w-7 h-7 lg:hidden"
+                    class="w-7 h-7"
                 />
             </button>
         </nav>

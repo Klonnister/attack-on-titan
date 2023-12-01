@@ -19,22 +19,17 @@ if( props.img ) {
 
 <template>
     <div class="flex flex-col gap-3 items-center">
-        <img
-          v-if="fixedLink"
-          :src="fixedLink"
-          alt=""
-          :class="props.status === 'Deceased' 
-            ? 'grayscale'
-            : ''"
-        >
-
-        <div
-            class="h-full w-full text-center flex items-center justify-center py-10  min-[350px]:py-12 bg-[#202020]"
-            v-else
-        >
-            <p class="text-sm font-martel">No image</p>
+        <div class="relative flex justify-center items-center">
+            <img
+              :src="fixedLink ? fixedLink : '/noimage.jpg'"
+              alt=""
+              class="max-w-[125px] sm:max-w-[150px] lg:max-w-[px]"
+              :class="props.status === 'Deceased' 
+                ? 'grayscale'
+                : ''"
+            >
+            <p class="absolute text-sm font-martel cursor-default" v-if="!fixedLink">No image</p>
         </div>
-
-        <p class="text-[0.62rem] min-[350px]:text-xs lg:text-sm font-martel text-center w-28">{{ props.name }}</p>
+        <p class="text-[0.62rem] min-[350px]:text-xs md:text-sm lg:text-base font-martel text-center w-28">{{ props.name }}</p>
     </div>
 </template>

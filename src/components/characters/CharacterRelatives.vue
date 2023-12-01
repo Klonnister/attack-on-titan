@@ -55,14 +55,14 @@ if( props.members.length ) {
 </script>
 
 <template>
-    <div class="my-6 flex flex-col w-full">
-        <p class="font-semibold mb-8 font-montserrat text-center uppercase text-lg lg:text-xl">
+    <div class="my-6 flex flex-col w-full lg:col-span-2" v-if="props.members.length">
+        <p class="font-semibold mb-8 md:mb-14 lg:mb-16 font-montserrat text-center uppercase text-lg md:text-xl lg:text-2xl">
             {{ props.family }}
         </p>
 
         <div
-          class="grid gap-12"
-          :class="props.members.length > 1 ? 'grid-cols-2' : 'grid-cols-1'"
+          class="flex gap-7 sm:gap-12 lg:gap-14 justify-center flex-wrap"
+          
         >
             <router-link 
                 v-for="relative in apiCharacters" 

@@ -29,10 +29,6 @@ const getCharacter = async() => {
                     fixedLink.value = fixLink( character.value.img );
                 }
             }
-
-            if( character.value.name === 'Eren Jaeger' ) {
-                character.value.groups.push( { name: "Scout Regiment"} )
-            }
             loading.value = false;
         } else {
             router.push( { name: 'not-found'} )
@@ -53,28 +49,27 @@ watch( () => props.id, () => {
 </script>
 
 <template>
-    <div class="w-full">
-        <div v-if="!loading" class="flex flex-col gap-8 items-center justify-center"> 
-
-            <img
-              :src="fixedLink"
-              alt=""
-              class="w-56"
-              v-if="fixedLink"
-            >
-
-            <div
-                class="w-56 h-56 text-center flex items-center justify-center py-12 bg-[#202020] text-sm font-martel"
-                v-else
-            >
-                No image
-            </div>
-
-            <div class="flex flex-col items-center text-center text-base md:text-lg gap-1">
-                <h3 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold"> {{ character.name }} </h3>
-
-                <p v-if="character.species.length > 1"> {{ character.species[0] }} - {{ character.species[1] }}</p>
-                <p v-else>{{ character.species[0] }}</p>
+    <div class="w-full my-10 flex justify-center">
+        <div v-if="!loading" class="w-full flex flex-col gap-8 lg:gap-16 items-center justify-center lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl"> 
+            <div class="flex flex-col gap-6 lg:col-span-2">
+                <div class="relative flex justify-center items-center">               
+                    <img
+                      :src="fixedLink ? fixedLink : '/noimage.jpg'"
+                      alt=""
+                      class="w-56 lg:w-64"
+                    >
+        
+                    <span class="text-sm font-martel absolute" v-if="!fixedLink">
+                        No image
+                    </span>
+                </div>
+    
+                <div class="flex flex-col items-center text-center text-base md:text-lg lg:text-xl gap-1">
+                    <h3 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold"> {{ character.name }} </h3>
+    
+                    <p v-if="character.species.length > 1"> {{ character.species[0] }} - {{ character.species[1] }}</p>
+                    <p v-else>{{ character.species[0] }}</p>
+                </div>
             </div>
 
             <CharacterInfo              
