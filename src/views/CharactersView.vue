@@ -149,6 +149,7 @@ const clearFilters = () => {
         <div class="mx-auto w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl flex mb-2">
             <input
               v-model="search"
+              id="search"
               type="search"
               placeholder="Buscar por nombre..."
               class="grow py-3 bg-[#202020] px-4 rounded-s-lg text-sm lg:text-base"
@@ -186,7 +187,7 @@ const clearFilters = () => {
                 <Dropdown
                   v-model="occupation"
                   :options="filtersList.occupationsList"
-                  placeholder="Organization"
+                  placeholder="Occupation"
                   class="w-full md:w-max md:grow md:w-14rem rounded-lg"
                   :loading="loading"
                 />
@@ -194,14 +195,14 @@ const clearFilters = () => {
             
             <div class="w-full flex justify-center gap-2 mb-2">
                 <button
-                  class="px-2 py-1 my-2 rounded-lg text-sm"
+                  class="px-2 py-1 my-1 rounded-lg text-sm"
                   @click="toggleShowFilters"
                 >
                     {{ showFilters ? 'Hide Filters' : 'Show Filters'  }} 
                 </button>
     
                 <button
-                  class="px-2 py-1 my-2 rounded-lg text-sm"
+                  class="px-2 py-1 my-1 rounded-lg text-sm"
                   @click="clearFilters"
                   v-if="gender || status || occupation || search"
                 >
@@ -213,13 +214,17 @@ const clearFilters = () => {
 
         <div v-if="!loading && characters" class="flex flex-col">
             <div class="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-10 2xl:gap-16">
-                <CharacterCard 
+                <router-link
                     v-for="character in characters"
                     :key="character.id"
-                    :name="character.name"
-                    :img="character.img || '' "
-                    :status="character.status"
-                />
+                    :to="{ name: 'character-id', params: { id: character.id }}"
+                >
+                    <CharacterCard 
+                        :name="character.name"
+                        :img="character.img || '' "
+                        :status="character.status"
+                    />
+                </router-link>
             </div>
 
             <div class="card md:mx-auto">
