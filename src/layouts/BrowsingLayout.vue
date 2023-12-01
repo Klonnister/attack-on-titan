@@ -1,7 +1,13 @@
 <script setup>
-import useViewStore from '@/stores/viewStore'
+import { useRoute } from 'vue-router';
+import { watch, ref } from 'vue';
 
-const viewStore = useViewStore()
+const route = useRoute();
+const routeName = ref( route.name );
+
+watch( route, ( newRoute ) => {
+    routeName.value = newRoute.name;
+})
 </script>
 
 <template>
@@ -14,7 +20,7 @@ const viewStore = useViewStore()
                 <RouterView />
             </div>
 
-        <MainFooter v-if="viewStore.showFooter" />
+        <MainFooter v-if="routeName != 'about'" />
 
 
     </div>
