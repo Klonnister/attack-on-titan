@@ -56,11 +56,14 @@ if( props.members.length ) {
 
 <template>
     <div class="my-6 flex flex-col w-full">
-        <p class="font-semibold mb-6 font-montserrat text-center uppercase text-lg lg:text-xl">
+        <p class="font-semibold mb-8 font-montserrat text-center uppercase text-lg lg:text-xl">
             {{ props.family }}
         </p>
 
-        <div class="flex flex-wrap justify-evenly items-start gap-y-8">
+        <div
+          class="grid gap-12"
+          :class="props.members.length > 1 ? 'grid-cols-2' : 'grid-cols-1'"
+        >
             <router-link 
                 v-for="relative in apiCharacters" 
                 :key="relative.name"

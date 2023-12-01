@@ -24,18 +24,16 @@ if( props.img ) {
           v-if="fixedLink"
           :src="fixedLink"
           alt=""
-          :class="props.status === 'Deceased' 
-            ? 'grayscale px-2 rounded-md grow'
-            : 'px-2 rounded-md grow'"
+          :class="{ 'grayscale':props.status === 'Deceased'} "
         >
 
         <div
-            class="h-full w-full text-center flex items-center justify-center py-12 bg-[#202020]"
+            class="h-full w-full text-center flex items-center justify-center py-10  min-[350px]:py-12 bg-[#202020]"
             v-else
         >
             <p class="text-sm font-martel">No image</p>
         </div>
 
-        <p class="text-xs lg:text-sm font-martel text-center">{{ props.name }}</p>
+        <p class="text-[0.62rem] min-[350px]:text-xs lg:text-sm font-martel text-center">{{ props.name }}</p>
     </div>
 </template>

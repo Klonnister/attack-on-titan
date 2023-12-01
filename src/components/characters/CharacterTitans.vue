@@ -49,11 +49,14 @@ if( props.alias.length ) {
 <template>
     <div
       v-if="characterTitans.length"
-      class="my-6 flex flex-col"
+      class="my-6 flex flex-col w-full"
     >
-        <p class="font-semibold mb-6 font-montserrat text-center uppercase text-lg lg:text-xl"> Inhenitor of </p>
+        <p class="font-semibold mb-8 font-montserrat text-center uppercase text-lg lg:text-xl"> Inhenitor of </p>
 
-        <div class="flex flex-wrap justify-evenly gap-y-8">
+        <div
+          class="grid gap-12"
+          :class="characterTitans.length > 1 ? 'grid-cols-2' : 'grid-cols-1'"
+        >
             <RelatedCard                      
                 v-for="titan in characterTitans" 
                 :key="titan.name"

@@ -213,7 +213,7 @@ const clearFilters = () => {
         
 
         <div v-if="!loading && characters" class="flex flex-col">
-            <div class="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 sm:gap-10 2xl:gap-16">
+            <div class="py-10 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10 sm:gap-12 2xl:gap-16">
                 <router-link
                     v-for="character in characters"
                     :key="character.id"

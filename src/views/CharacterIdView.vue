@@ -2,11 +2,13 @@
 import { ref, watch } from 'vue';
 import fixLink from '@/composables/useFixLink';
 import useScroll from '@/composables/useScroll'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
     id: Number
 })
 
+const router = useRouter();
 const scrollToTop = useScroll;
 const loading = ref(true);
 const character = ref(null);
@@ -14,25 +16,31 @@ const fixedLink = ref(null);
 
 
 const getCharacter = async() => {
-    if( Number( props.id ) ) {
+    loading.value = true;
 
-        loading.value = true;
+    try {
         const resp = await fetch(`https://api.attackontitanapi.com/characters/${props.id}`).then( r => r.json() )
+        
+        if( !Array.isArray(resp) ) {
+            character.value = resp
 
-        character.value = resp
-
-        if( character.value.img ) {
-            if ( character.value.name !== 'Muller' ) {
-                fixedLink.value = fixLink( character.value.img );
+            if( character.value.img ) {
+                if ( character.value.name !== 'Muller' ) {
+                    fixedLink.value = fixLink( character.value.img );
+                }
             }
-        }
 
-        if( character.value.name === 'Eren Jaeger' ) {
-            character.value.groups.push( { name: "Scout Regiment"} )
+            if( character.value.name === 'Eren Jaeger' ) {
+                character.value.groups.push( { name: "Scout Regiment"} )
+            }
+            loading.value = false;
+        } else {
+            router.push( { name: 'not-found'} )
         }
-
-        loading.value = false;
+    } catch (error) {
+        router.push( { name: 'not-found'} )
     }
+
 }
 
 getCharacter();

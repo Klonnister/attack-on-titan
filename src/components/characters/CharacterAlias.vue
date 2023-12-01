@@ -6,7 +6,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <div class="w-full grid grid-cols-2 gap-2">
+    <div class="w-full grid grid-cols-1 min-[350px]:grid-cols-2 gap-2">
         <div
             v-if="props.alias.length"
             class="bg-gray-800 p-4 flex flex-col"
