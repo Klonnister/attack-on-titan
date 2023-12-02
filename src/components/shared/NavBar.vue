@@ -68,7 +68,7 @@ const closeMenu = () => {
                         v-for="link in useLinks"
                         :key="link.id"
                         :to="link.url"
-                        class="font-montserrat uppercase font-semibold hover:text-[#FFFFFF] border-b border-[#000000] transition-all ease-in-out duration-100"
+                        class="font-montserrat uppercase font-semibold hover:-translate-y-[2px] hover:text-[#FFFFFF] border-b border-[#000000] transition-all ease-in-out duration-300"
                     >
                         {{ link.name }}
                     </router-link>
@@ -77,7 +77,7 @@ const closeMenu = () => {
 
             <router-link
                 :to="{ name: 'about' }"
-                class="hidden lg:block font-montserrat uppercase font-semibold hover:text-[#FFFFFF] transition-all ease-in-out duration-100 border-b border-[#000000]"
+                class="hidden lg:block font-montserrat uppercase font-semibold hover:-translate-y-[2px] hover:text-[#FFFFFF] transition-all ease-in-out duration-300 border-b border-[#000000]"
             >
                 About
             </router-link>

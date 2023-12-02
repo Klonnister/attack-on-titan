@@ -16,7 +16,7 @@ watch( route, ( newRoute ) => {
 
         <NavBar />
 
-            <div class="grow pt-10 py-16 flex items-center">
+            <div class="grow pt-10 py-16 flex justify-center items-center w-full">
                 <RouterView />
             </div>
 

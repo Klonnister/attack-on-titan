@@ -69,9 +69,10 @@ const useHomeLinks = homeLinks
                     v-for="link in useHomeLinks"
                     :key="link.id"
                     :to="link.url"
+                    class="hover:xl:scale-105 transition-all duration-500 ease-out"
                 >
                     <div
-                      :class="`w-full h-48 sm:h-36 md:h-48 lg:h-56 hover:lg:h-60 xl:h-44 hover:xl:h-[11.5rem] bg-no-repeat bg-cover bg-center rounded-3xl mb-3 transition-all duration-500 ease-out ${link.id}`"
+                      :class="`w-full h-48 sm:h-36 md:h-48 lg:h-56 xl:h-44 bg-no-repeat bg-cover bg-center rounded-3xl mb-3 transition-all duration-500 ease-out ${link.id}`"
                       alt=""
                     ></div>
                     <p class="text-[13px] min-[475px]:text-sm xl:text-base font-montserrat uppercase font-semibold">{{ link.name }}</p>
@@ -84,10 +85,10 @@ const useHomeLinks = homeLinks
 
             <div class="my-8 md:my-12 xl:my-16 flex justify-center items-center gap-6 sm:gap-12 lg:gap-20 xl:gap-24">
                 <a href="https://www.crunchyroll.com/es-es/series/GR751KNZY/attack-on-titan">
-                    <img src="/crunchyroll.png" alt="" class="w-20 sm:w-28 hover:sm:rotate-[-4deg] transition-all ease-in-out duration-300 h-auto">
+                    <img src="/crunchyroll.png" alt="" class="w-20 sm:w-28 hover:rotate-[-4deg] hover:scale-110 transition-all duration-500 ease-out h-auto">
                 </a>
                 <a href="https://www.amazon.com/-/es/gp/video/detail/B00NL5MRRU/ref=atv_dp_season_select_s101?language=es">
-                    <img src="/primevideo.png" alt="" class="w-32 sm:w-48 hover:sm:rotate-[-4deg] transition-all ease-in-out duration-300">
+                    <img src="/primevideo.png" alt="" class="w-32 sm:w-48 hover:sm:rotate-[-4deg] hover:scale-110 transition-all ease-in-out duration-300">
                 </a>
             </div>
 

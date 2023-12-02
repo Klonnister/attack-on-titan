@@ -15,7 +15,7 @@ const scrollToTop = useScroll
 
         <a
           href="https://github.com/Klonnister"
-          class="text-xs md:text-sm lg:text-base hover:lg:text-[17px] transition-all duration-300 ease-in-out uppercase font-montserrat flex justify-center items-center gap-2 md:gap-4"
+          class="text-xs md:text-sm lg:text-base hover:scale-105 transition-all duration-500 ease-out uppercase font-montserrat flex justify-center items-center gap-2 md:gap-4 my-1"
         >
             <img
               src="/github.png"
