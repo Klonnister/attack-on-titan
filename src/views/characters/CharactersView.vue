@@ -7,6 +7,7 @@ import Paginator from 'primevue/paginator';
 import { scrollToTopRough } from '@/composables/useScroll'
 
 // Response data
+const loading = ref(true);
 const characters = ref(null);
 const pagesInfo = ref(null);
 
@@ -22,16 +23,12 @@ const occupation = ref(null);
 const newPage = ref(1)
 const firstItem = ref(0)
 
-// Additional
-const loading = ref(true);
-
-
 // Characters request to API
 const getCharacters = async () => {
     loading.value = true;
     const queries = ref('');
 
-    if ( newPage.value ) {
+    if ( newPage.value > 1 ) {
         if( queries.value.startsWith('?') ) {
             queries.value = queries.value + '&page=' + newPage.value;
         } else {
@@ -143,7 +140,7 @@ const clearFilters = () => {
 
 <template>
     
-    <div class="w-full my-10">
+    <div class="w-full my-4">
         <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">Characters</h2>
 
         <div class="mx-auto w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl flex mb-2">
@@ -151,8 +148,8 @@ const clearFilters = () => {
               v-model="search"
               id="search"
               type="search"
-              placeholder="Buscar por nombre..."
-              class="grow py-3 bg-[#202020] px-4 rounded-s-lg text-sm lg:text-base"
+              placeholder="Search name..."
+              class="grow py-3 bg-[#202020] px-2 min-[350px]:px-4 rounded-s-lg text-sm lg:text-base"
               @keyup.enter="searchCharacter"
             >
             <button
