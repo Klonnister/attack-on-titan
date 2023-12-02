@@ -39,6 +39,33 @@ const useFiltersLists = {
     
     seasonsList: ['All', 'S1', 'S2', 'S3', 'S4'],
     
+    regionsList: [
+        'All',
+        'South',
+        'East',
+        'Center',
+        'unknown',
+        'Continental mainland',
+        'Orient',
+        'West',
+        'North',
+    ],
+
+    territoriesList: [
+        'All',
+        'Shiganshina District',
+        'Dauper',
+        'Wall Rose',
+        'Wall Sina',
+        'Eldia',
+        'Wall Maria',
+        'Marley',
+        'Hizuru',
+        'unknown',
+        'Mid-East Allied Forces',
+        'None',
+        'Paradis Island',
+    ]
 }
 
 export default useFiltersLists
