@@ -9,19 +9,19 @@ export const homeLinks = [
         name: 'Episodes',
         id: 'episodes',
         img: '/episodes.gif',
-        url: '/',
+        url: { name: 'episodes' },
     },
     {
         name: 'Locations',
         id: 'locations',
         img: '/locations.gif',
-        url: '/',
+        url: { name: 'locations' },
     },
     {
         name: 'Titans',
         id: 'titans',
         img: '/titans.gif',
-        url: '/',
+        url: { name: 'home' },
     },
 ]
 

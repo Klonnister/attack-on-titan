@@ -37,6 +37,8 @@ const useFiltersLists = {
 
     statusList: ['All', 'Alive', 'Deceased', 'Unknown'],
     
+    seasonsList: ['All', 'S1', 'S2', 'S3', 'S4'],
+    
 }
 
 export default useFiltersLists

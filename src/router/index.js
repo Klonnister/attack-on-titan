@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/home/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,30 +18,54 @@ const router = createRouter({
       component: () => import('../layouts/BrowsingLayout.vue'),
       children: [
         {
-          path: '',
-          redirect: { name: 'home' },
-        },
-        {
           path: 'about',
           name: 'about',
-          component: () => import('../views/AboutView.vue')
+          component: () => import('../views/about/AboutView.vue')
         },
+
         {
           path: 'characters',
           name: 'characters',
-          component: () => import('../views/CharactersView.vue'),
+          component: () => import('../views/characters/CharactersView.vue'),
         },
+
         {
           path: 'characters/:id',
           name: 'character-id',
-          component: () => import('../views/CharacterIdView.vue'),
+          component: () => import('../views/characters/CharacterIdView.vue'),
           props: ( route ) => {
             const id = Number( route.params.id )
             return { id }
           }
         },
 
+        {
+          path: 'episodes',
+          name: 'episodes',
+          component: () => import('../views/episodes/EpisodesView.vue')
+        },
 
+        {
+          path: 'episodes/:id',
+          name: 'episodes-id',
+          component: () => import('../views/episodes/EpisodeIdView.vue'),
+          props: ( route ) => {
+            const id = route.params.id;
+            return { id }
+          }
+        },
+
+        {
+          path: 'locations',
+          name: 'locations',
+          component: () => import('../views/locations/LocationsView.vue')
+        },
+
+
+        {
+          path: '',
+          redirect: { name: 'home' },
+        },
 
         {
           path: '/:pathMatch(.*)*',
