@@ -28,6 +28,8 @@ const getCharacter = async() => {
                 if ( character.value.name !== 'Muller' ) {
                     fixedLink.value = fixLink( character.value.img );
                 }
+            } else {
+                fixedLink.value = null;
             }
             loading.value = false;
         } else {
@@ -54,6 +56,7 @@ watch( () => props.id, () => {
             <div class="flex flex-col gap-6 lg:col-span-2">
                 <div class="relative flex justify-center items-center">               
                     <img
+                      v-if="character"
                       :src="fixedLink ? fixedLink : '/noimage.jpg'"
                       alt=""
                       class="w-56 lg:w-64"

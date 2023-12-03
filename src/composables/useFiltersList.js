@@ -65,7 +65,14 @@ const useFiltersLists = {
         'Mid-East Allied Forces',
         'None',
         'Paradis Island',
-    ]
+    ],
+
+    allegiancesList: [
+        'All',
+        'Eldia',
+        'Marley',
+        'None',
+    ],
 }
 
 export default useFiltersLists

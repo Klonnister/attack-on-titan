@@ -218,7 +218,7 @@ const clearFilters = () => {
                 >
                     <CharacterCard 
                         :name="character.name"
-                        :img="character.img || '' "
+                        :img="character.img ? character.img : ''"
                         :status="character.status"
                     />
                 </router-link>

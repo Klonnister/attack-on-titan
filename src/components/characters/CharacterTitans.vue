@@ -33,16 +33,11 @@ const getTitan = async( titan ) => {
 }
 
 if( props.alias.length ) {
-    if( props.character !== 'Grisha Jaeger' ) {
-        props.alias.forEach( alias => {
-            if( titansList.includes( alias ) ) {
-                getTitan( alias )
-            }
-        })  
-    } else {
-        getTitan('Attack titan')
-    }
-
+    props.alias.forEach( alias => {
+        if( titansList.includes( alias ) ) {
+            getTitan( alias )
+        }
+    })  
 }
 </script>
 
@@ -51,15 +46,19 @@ if( props.alias.length ) {
       v-if="characterTitans.length"
       class="my-6 flex flex-col w-full lg:col-span-2"
     >
-        <p class="font-semibold mb-8 md:mb-10 lg:mb-16 font-montserrat text-center uppercase text-lg md:text-xl lg:text-2xl"> Inhenitor of </p>
+        <p class="font-semibold mb-8 md:mb-10 lg:mb-16 font-montserrat text-center uppercase text-lg md:text-xl lg:text-2xl"> Inheritor of </p>
 
         <div class="flex gap-7 sm:gap-12 lg:gap-12 justify-center flex-wrap">
-            <RelatedCard                      
-                v-for="titan in characterTitans" 
-                :key="titan.name"
-                :name="titan.name"
-                :img="titan.img"
-            />
+            <router-link
+              v-for="titan in characterTitans"
+              :key="titan.name"
+              :to=" { name: 'titans-id', params: { id: titan.id } } "
+            >
+                <RelatedCard                     
+                    :name="titan.name"
+                    :img="titan.img"
+                />
+            </router-link>
         </div>
     </div>
 </template>

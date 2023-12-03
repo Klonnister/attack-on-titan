@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 
 const props = defineProps({
+    title: String,
     members: Array
 })
 
@@ -16,10 +17,9 @@ const getCharacter = async( url ) => {
 
 if( props.members.length ) {
     props.members.forEach( member => {
-
-        if( member.startsWith('https') ) {
+        if( member.startsWith('https') && member.includes('characters') ) {
             getCharacter( member )
-        } else {
+        } else if( !member.includes('titans') ) {
             notFoundCharacters.value.push( member )  
         }
     })
@@ -30,7 +30,7 @@ if( props.members.length ) {
 <template>
     <div class="my-6 flex flex-col w-full lg:col-span-2" v-if="props.members.length">
         <p class="font-semibold mb-8 md:mb-14 lg:mb-16 font-montserrat text-center uppercase text-base md:text-lg lg:text-xl">
-            Characters seen
+            {{ props.title }}
         </p>
 
         <div
@@ -44,7 +44,7 @@ if( props.members.length ) {
             >
                 <RelatedCard                      
                     :name="character.name"
-                    :img="character.img"
+                    :img="character.img ? character.img : ''"
                     :status="character.status"
                 />
             </router-link>
@@ -53,7 +53,7 @@ if( props.members.length ) {
                 v-for="character in notFoundCharacters" 
                 :key="character"
                 :name="character"
-                img=""
+                :img="character.img ? character.img : ''"
             />
         </div>
     </div>

@@ -71,7 +71,7 @@ if( props.members.length ) {
             >
                 <RelatedCard                      
                     :name="relative.name"
-                    :img="relative.img"
+                    :img="relative.img || ''"
                     :status="relative.status"
                 />
             </router-link>
@@ -80,7 +80,7 @@ if( props.members.length ) {
                 v-for="relative in notFoundCharacters" 
                 :key="relative"
                 :name="relative"
-                img=""
+                :img="''"
             />
         </div>
     </div>

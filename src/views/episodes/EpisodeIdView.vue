@@ -101,8 +101,9 @@ getEpisode();
 
             </div>
 
-            <EpisodeCharacters
+            <RelatedCharacters
                 v-if="episode.characters.length"
+                title="Characters Seen"
                 :members="episode.characters"
             />
         </div>
