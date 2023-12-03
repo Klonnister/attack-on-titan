@@ -77,7 +77,7 @@ watch( () => props.id, () => {
                 >
                     <p class="mb-2 font-montserrat text-center md:text-lg lg:text-xl">Height</p>
 
-                    <p class="text-sm lg:text-base text-center text-white">
+                    <p class="text-sm font-montserrat md:text-base text-center text-white">
                         {{ titan.height }}
                     </p>
                 </div>
@@ -89,7 +89,7 @@ watch( () => props.id, () => {
                 >
                     <p class="mb-2 font-montserrat text-center md:text-lg lg:text-xl">Allegiance</p>
                     
-                    <p class="text-sm lg:text-base text-center text-white">
+                    <p class="text-sm md:text-base text-center text-white">
                         {{ titan.allegiance }}
                     </p>
                 </div>
@@ -105,7 +105,7 @@ watch( () => props.id, () => {
                         <li
                             v-for="ability in titan.abilities"
                             :key="ability"
-                            class="text-sm mb-3 lg:text-base text-center text-white"
+                            class="text-sm mb-3 md:text-base text-center text-white"
                         >
                             {{ ability }}
                         </li>
