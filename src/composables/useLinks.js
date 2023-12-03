@@ -21,7 +21,7 @@ export const homeLinks = [
         name: 'Titans',
         id: 'titans',
         img: '/titans.gif',
-        url: { name: 'home' },
+        url: { name: 'titans' },
     },
 ]
 
