@@ -30,7 +30,7 @@ const props = defineProps({
             :class="{ 'col-span-2': !props.alias.length }"
         >
             <p class="font-semibold mb-3 font-montserrat text-center md:text-lg lg:text-xl">Roles</p>
-            <ol>
+            <ul>
                 <li                          
                     v-for="role in props.roles"
                     :key="role"
@@ -39,7 +39,7 @@ const props = defineProps({
                 >
                     {{ role || 'Royal Government' }}
                 </li>
-            </ol>
+            </ul>
         </div>
     </div>
 </template>
