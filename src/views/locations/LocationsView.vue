@@ -62,6 +62,12 @@ const getLocations = async() => {
         locations.value = response.results;
         loading.value = false;
 
+        locations.value.forEach( loc => {
+            if( loc.notable_former_inhabitants.length ) {
+                console.log(loc.name)
+            }
+        })
+
     } catch (error) {
         
         console.log(error)

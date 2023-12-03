@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import { Icon } from '@iconify/vue';
+// import { Icon } from '@iconify/vue';
 import fixLink from '@/composables/useFixLink';
 
 const props = defineProps({
