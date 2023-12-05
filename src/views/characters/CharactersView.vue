@@ -137,7 +137,7 @@ const clearFilters = () => {
 </script>
 
 <template>
-    <Transition name="fade-view">
+    <Transition name="fade">
         <div class="w-full my-4" v-if="!loading">
             <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">Characters</h2>
     
@@ -242,18 +242,20 @@ const clearFilters = () => {
             </div>
 
             <div
-                class="w-full py-20 lg:py-28 flex justify-center font-montserrat text-lg "
-                v-else-if="loading"
-            >
-                Loading...
-            </div>
-
-            <div
                 class="w-full py-28 flex justify-center font-montserrat text-lg "
                 v-else
             >
                 No results found
             </div>
+        </div>
+    </Transition>
+
+    <Transition name="fade-slow">
+        <div
+            class="w-full min-h-screen flex justify-center items-center font-montserrat text-lg fixed top-0 left-0"
+            v-if="loading"
+        >   
+            Loading...
         </div>
     </Transition>
     
@@ -314,14 +316,16 @@ const clearFilters = () => {
   opacity: 0;
 }
 
-.fade-view-enter-active,
-.fade-view-leave-active {
+.fade-slow-enter-active {
+  transition: opacity 1s ease;
+}
+
+.fade-slow-leave-active .fade-slow-enter-active {
   transition: opacity 0.2s ease;
 }
 
-.fade-view-enter-from,
-.fade-view-leave-to {
+.fade-slow-enter-from,
+.fade-slow-leave-to {
   opacity: 0;
 }
-
 </style>

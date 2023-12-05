@@ -125,7 +125,7 @@ const getPrevSeason = () => {
 </script>
 
 <template>
-    <div class="my-8 w-full flex flex-col gap-28">
+    <div class="my-8 w-full flex flex-col gap-28" v-if="!loading">
             
         <div class="w-full text-xs text-center flex flex-col items-center gap-8">
             <div class="flex items-center mb-10 gap-8">
