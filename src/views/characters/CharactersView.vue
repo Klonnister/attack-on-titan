@@ -5,7 +5,6 @@ import { Icon } from '@iconify/vue';
 import Dropdown from 'primevue/dropdown';
 import Paginator from 'primevue/paginator';
 import { scrollToTopRough } from '@/composables/useScroll'
-import { onBeforeRouteLeave } from 'vue-router';
 
 // Response data
 const loading = ref(true);
@@ -135,11 +134,6 @@ const clearFilters = () => {
     newPage.value = 1;
     getCharacters();
 }
-
-onBeforeRouteLeave( (to, from, next) => {
-    loading.value = true;
-    setTimeout( () => { next() }, 300)
-})
 </script>
 
 <template>

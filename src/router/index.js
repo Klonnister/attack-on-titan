@@ -25,18 +25,25 @@ const router = createRouter({
 
         {
           path: 'characters',
-          name: 'characters',
-          component: () => import('../views/characters/CharactersView.vue'),
-        },
+          name: 'characters-group',
+          component: () => import('../views/characters/CharactersGroup.vue'),
+          children: [
+            {
+              path: ':id',
+              name: 'character-id',
+              component: () => import('../views/characters/CharacterIdView.vue'),
+              props: ( route ) => {
+                const id = Number( route.params.id )
+                return { id }
+              }
+            },
 
-        {
-          path: 'characters/:id',
-          name: 'character-id',
-          component: () => import('../views/characters/CharacterIdView.vue'),
-          props: ( route ) => {
-            const id = Number( route.params.id )
-            return { id }
-          }
+            {
+              path: '',
+              name: 'characters',
+              component: () => import('../views/characters/CharactersView.vue'),
+            },
+          ],
         },
 
         {

@@ -15,7 +15,7 @@ switchLoading();
 
 onBeforeRouteLeave( (to, from, next) => {
     showContent.value = false;
-    setTimeout( () => { next() }, 300)
+    setTimeout( () => { next() }, 200)
 })
 
 

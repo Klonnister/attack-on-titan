@@ -18,7 +18,10 @@ if( props.img ) {
 </script>
 
 <template>
-    <div class="flex flex-col gap-3 items-center">
+    <div
+      class="flex flex-col gap-3 items-center transition-all duration-300 ease-out"
+      :class=" { 'hover:-translate-y-1': fixedLink } "
+    >
         <div class="relative flex justify-center items-center">
             <img
               :src="fixedLink ? fixedLink : '/noimage.jpg'"
