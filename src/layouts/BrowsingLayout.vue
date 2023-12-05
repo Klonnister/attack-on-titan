@@ -48,14 +48,14 @@ onBeforeRouteLeave( (to, from, next) => {
         class="w-2/4 h-full flex justify-end items-center transition-all ease-in-out duration-300 fixed top-0 left-0 bg-black"
         :class="loading ? '' : '-translate-x-full'"
     >
-        <img src="/bg-1.jpg" alt="" class="rounded-s-full">
+        <img src="/bg-1.jpg" alt="" class="rounded-s-full ps-4">
     </div>
 
     <div
         class="w-2/4 h-full flex justify-start items-center transition-all ease-out duration-300 fixed top-0 bg-black right-0"
         :class="loading ? '' : 'translate-x-full'"
     >
-        <img src="/bg-2.jpg" alt="" class="rounded-e-full">
+        <img src="/bg-2.jpg" alt="" class="rounded-e-full pe-4">
     </div>
 
 </template>
