@@ -46,19 +46,35 @@ const router = createRouter({
         },
 
         {
-          path: 'episodes/:id',
-          name: 'episodes-id',
-          component: () => import('../views/episodes/EpisodeIdView.vue'),
+          path: 'locations',
+          name: 'locations',
+          component: () => import('../views/locations/LocationsView.vue')
+        },
+
+        {
+          path: 'locations/:id',
+          name: 'locations-id',
+          component: () => import('../views/locations/LocationIdView.vue'),
           props: ( route ) => {
-            const id = route.params.id;
+            const id = Number(route.params.id)
             return { id }
           }
         },
 
         {
-          path: 'locations',
-          name: 'locations',
-          component: () => import('../views/locations/LocationsView.vue')
+          path: 'titans',
+          name: 'titans',
+          component: () => import('../views/titans/TitansView.vue'),
+        },
+
+        {
+          path: 'titans/:id',
+          name: 'titans-id',
+          component: () => import('../views/titans/TitanIdView.vue'),
+          props: ( route ) => {
+            const id = Number(route.params.id)
+            return { id }
+          }
         },
 
 

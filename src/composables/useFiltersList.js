@@ -37,7 +37,10 @@ const useFiltersLists = {
 
     statusList: ['All', 'Alive', 'Deceased', 'Unknown'],
     
-    seasonsList: ['All', 'S1', 'S2', 'S3', 'S4'],
+    seasonsList: {
+        values: ['S1', 'S2', 'S3', 'S4'],
+        names: ['Season 1', 'Season 2', 'Season 3', 'Season 4'], 
+    },
     
     regionsList: [
         'All',

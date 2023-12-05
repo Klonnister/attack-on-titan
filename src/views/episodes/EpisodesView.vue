@@ -1,19 +1,21 @@
 <script setup>
 import { Icon } from '@iconify/vue';
-import Dropdown from 'primevue/dropdown';
 import Paginator from 'primevue/paginator';
 import { ref, watch } from 'vue';
+import trailersList from '@/composables/useTrailersList';
 import useFiltersList from '@/composables/useFiltersList';
-import { scrollToTopRough } from '@/composables/useScroll'
+import scrollToTop from '@/composables/useScroll'
 
 const loading = ref(true);
 const pagesInfo = ref(null);
 const episodes = ref(null);
 
 const filtersList = useFiltersList;
-const showFilters = ref(false);
 const search = ref(null);
-const season = ref(null);
+const season = ref('Season 1');
+
+const prevSeason = ref( 0 )
+const nextSeason = ref( 2 )
 
 // Paginator variables
 const newPage = ref(1);
@@ -50,9 +52,9 @@ const getEpisodes = async() => {
     
         if ( season.value ) {
             if( queries.value.startsWith('?') ) {
-                queries.value = queries.value + '&episode=' + season.value.toLowerCase();
+                queries.value = queries.value + '&episode=' + filtersList.seasonsList.values[filtersList.seasonsList.names.indexOf(season.value)];
             } else {
-                queries.value = `?episode=${season.value.toLowerCase()}`
+                queries.value = `?episode=${filtersList.seasonsList.values[filtersList.seasonsList.names.indexOf(season.value)]}`
             }
         }
     
@@ -69,6 +71,7 @@ const getEpisodes = async() => {
         loading.value = false;
 
     }
+
 }
 
 getEpisodes();
@@ -96,83 +99,129 @@ const onPaginate = ( event ) => {
     
 
     getEpisodes();
-    scrollToTopRough();
+    scrollToTop();
 }
 
-const toggleShowFilters = () => {
-    showFilters.value = !showFilters.value
+const getNextSeason = () => {
+    if( nextSeason.value <= 4 ) {
+        search.value = '';
+        season.value = `Season ${ nextSeason.value }`;
+        prevSeason.value = prevSeason.value + 1;
+        nextSeason.value = nextSeason.value + 1;
+        getEpisodes();
+    }
 }
 
-const clearFilters = () => {
-    search.value = '';
-    season.value = '';
+const getPrevSeason = () => {
+    if( prevSeason.value ) {
+        search.value = '';
+        season.value = `Season ${ prevSeason.value }`;
+        prevSeason.value = prevSeason.value - 1;
+        nextSeason.value = nextSeason.value - 1;
+        getEpisodes();
+    }
 }
 
 </script>
 
 <template>
-    <div class="w-full my-4">
-        <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">Episodes</h2>
-
-        <div class="mx-auto w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl flex mb-2">
-            <input
-              v-model="search"
-              id="search"
-              type="search"
-              placeholder="Search name or code..."
-              class="grow py-3 bg-[#202020] px-2 min-[350px]:px-4 rounded-s-lg text-sm lg:text-base"
-              @keyup.enter="searchEpisodes"
-            >
+    <div class="my-8 w-full flex flex-col gap-28">
             
-            <button
-              class="bg-[#202020] px-3 rounded-e-lg border-s border-s-2 border-[#000000]"
-              @click="searchEpisodes"
-            >
-            
-                <Icon
-                  icon="bx:search-alt-2"
-                  class="w-6 h-6"
-                />
-            </button>
-        </div>
-
-        <div class="w-full flex flex-col items-center">
-            <div class="w-full flex justify-center" v-if="showFilters">
-                <Dropdown
-                  v-model="season"
-                  :options="filtersList.seasonsList"
-                  placeholder="Season"
-                  class="grow sm:max-w-[12rem] rounded-lg"
-                  :loading="loading"
-                />
-            </div>
-            
-            <div class="w-full flex justify-center gap-2 mb-2">
+        <div class="w-full text-xs text-center flex flex-col items-center gap-8">
+            <div class="flex items-center mb-10 gap-8">
                 <button
-                  class="px-2 py-1 my-1 rounded-lg text-sm"
-                  @click="toggleShowFilters"
+                  class="p-3 rounded-full transition-all ease-in-out duration-300"
+                  :class=" { 'hover:bg-[#232323]': prevSeason } "
+                  @click="getPrevSeason"
                 >
-                    {{ showFilters ? 'Hide Filters' : 'Show Filters'  }} 
+                    <Icon 
+                      icon="ep:arrow-left-bold"
+                      class="w-4 h-4"
+                      :class="prevSeason ? 'text-[#C0C1C3]' : 'text-[#606060]'"
+                    />
                 </button>
-    
+
+                <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat 
+                font-bold text-center"> {{ season }} </h2>
+
                 <button
-                  class="px-2 py-1 my-1 rounded-lg text-sm"
-                  @click="clearFilters"
-                  v-if="search || season"
+                  class="p-3 rounded-full transition-all ease-in-out duration-300"
+                  :class=" { 'hover:bg-[#232323]': nextSeason <= 4 } "
+                  @click="getNextSeason"
                 >
-                    Clear filters
+                    <Icon 
+                      icon="ep:arrow-right-bold"
+                      class="w-4 h-4 text-[#C0C1C3]"
+                      :class="nextSeason <= 4 ? 'text-[#C0C1C3]' : 'text-[#606060]'"
+                    />
                 </button>
             </div>
+
+            <p class="font-semibold font-montserrat text-center uppercase text-base md:text-lg lg:text-xl">Trailer</p>
+
+            <div class="w-full max-w-xl flex flex-col items-center">
+                <iframe
+                class="w-full h-56 min-[475px]:h-80 lg:h-80"
+                :src="trailersList[season].url"
+                title="Youtube Video Player"
+                frameborder="0"
+                allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                >
+                </iframe>
+                
+                <p class="text-sm mt-4" v-if="trailersList[season].type === 'fanmade'">
+                    {{ trailersList[season].title }}
+                    fan-made trailer by
+                    <a
+                    :href="trailersList[season].channel"
+                    class="text-[#FFFFFF]"
+                    >
+                    {{ trailersList[season].author }}
+                    </a>
+                </p>
+
+                <p class="text-sm mt-2" v-else>
+                    {{ trailersList[season].title }}
+                    Official Trailer
+                </p>
+            </div>
+
         </div>
-        
 
-        <div v-if="!loading && episodes" class="flex flex-col">
+        <div v-if="!loading && episodes" class="flex flex-col gap-12 lg:gap-14">
+            <div class="flex flex-col gap-4 lg:gap-8">
+                <p class="font-semibold font-montserrat text-center uppercase text-base md:text-lg lg:text-xl" id="listTitle">Episodes list</p>
 
-            <div class="py-10 lg:py-20 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 md:gap-x-10 gap-y-10 xl:gap-12 2xl:gap-16">
-                <router-link
+                <div class="mx-auto w-full md:max-w-lg 2xl:max-w-xl flex">
+                    <input
+                        v-model="search"
+                        id="search"
+                        type="search"
+                        placeholder="Search name..."
+                        class="grow py-2 bg-[#202020] px-2 min-[350px]:px-4 rounded-s-lg text-sm lg:text-base"
+                        @keyup.enter="searchEpisodes"
+                    >
+                    
+                    <button
+                        class="bg-[#202020] px-3 rounded-e-lg border-s border-s-2 border-[#000000]"
+                        @click="searchEpisodes"
+                    >
+                    
+                        <Icon
+                            icon="bx:search-alt-2"
+                            class="w-6 h-6"
+                        />
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 md:gap-x-10 gap-y-10 xl:gap-12 2xl:gap-16">
+                <a
                     v-for="episode in episodes"
                     :key="episode.id"
-                    :to="{ name: 'episodes-id', params: { id: episode.id } }"
+                    href="https://www.crunchyroll.com/es-es/series/GR751KNZY/attack-on-titan"
+                    target="_blank"
                     class="flex justify-center"
                 >
                     <EpisodeCard 
@@ -180,7 +229,7 @@ const clearFilters = () => {
                         :name="episode.name"
                         :img="episode.img"
                     />  
-                </router-link>
+                </a>
             </div>
 
             <div class="card md:mx-auto">

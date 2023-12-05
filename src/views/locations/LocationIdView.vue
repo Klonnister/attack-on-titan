@@ -115,11 +115,17 @@ getEpisode();
                     Debut
                 </p>
 
-                <EpisodeCard 
-                    :code="debut.episode"
-                    :name="debut.name"
-                    :img="debut.img"
-                />  
+                <a
+                    href="https://www.crunchyroll.com/es-es/series/GR751KNZY/attack-on-titan"
+                    target="_blank"
+                    class="flex justify-center"
+                >
+                    <EpisodeCard 
+                        :code="debut.episode"
+                        :name="debut.name"
+                        :img="debut.img"
+                    />
+                </a>
             </div>
 
             <RelatedCharacters
