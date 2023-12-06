@@ -8,7 +8,7 @@ const useHomeLinks = homeLinks
     <div class="my-12 sm:my-16 lg:my-20 text-center flex flex-col gap-8">
             
             <h2 class="font-montserrat font-bold text-xl md:text-2xl text-[#D8D8D8] uppercase">What you'll find here</h2>
-            <p class="text-sm md:text-base text-justify leading-8 sm:leading-9 md:leading-10 sm:text-center">Select one of the options below to start browsing. Note that the information shown on this page is up to the second to last episode of the anime.</p>
+            <p class="text-sm md:text-base text-justify leading-8 sm:leading-9 md:leading-10 sm:text-center">Select one of the options below to start browsing. Note that the information shown on this page is up to the second to last episode of the anime. Please be aware, before progressing any further, that this site contains heavy spoilers.</p>
 
             <div class="my-12 sm:mt-16 md:mt-20 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-12 xl:gap-8">
                 <router-link
