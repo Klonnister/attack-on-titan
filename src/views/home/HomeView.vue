@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
 
+// Loading animations
 const loading = ref(false);
 const showContent = ref(false);
 
@@ -45,7 +46,7 @@ onBeforeRouteLeave( (to, from, next) => {
         </HomeLayout>
     </Transition>
     
-
+    <!-- Divided loading screen -->
     <div
         class="w-2/4 h-full flex justify-end items-center transition-all ease-in-out duration-300 fixed top-0 left-0 bg-black"
         :class="loading ? '' : '-translate-x-full'"

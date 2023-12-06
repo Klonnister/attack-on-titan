@@ -7,16 +7,21 @@ const props = defineProps({
     members: Array
 })
 
+// Page character first name
 const firstName = props.character.slice(0, props.character.indexOf(' '))
+
+// Relatives separation
 const apiCharacters = ref([]);
 const notFoundCharacters = ref([]);
 
+// Api relative request
 const getCharacter = async( url ) => {
     const resp = await fetch( url ).then( r => r.json() )
 
     apiCharacters.value.push( resp )
 }
 
+// Get or filter unnamed relative
 const getUnnamedCharacter = async( mainCharacter, relationship, relative ) => {
     try {
         const resp = await fetch(`https://api.attackontitanapi.com/characters?name=${mainCharacter}'s ${relationship}`).then( r => r.json() )
@@ -28,6 +33,7 @@ const getUnnamedCharacter = async( mainCharacter, relationship, relative ) => {
     }
 }
 
+// Filter relatives (Api or notFound), and request
 if( props.members.length ) {
     props.members.forEach( member => {
 

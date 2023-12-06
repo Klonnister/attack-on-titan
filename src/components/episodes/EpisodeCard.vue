@@ -9,9 +9,10 @@ const props = defineProps({
     code: { type: String, required: true },
 })
 
+// Cut img url
 const fixedLink = ref(null);
-
 fixedLink.value = fixLink( props.img );
+
 </script>
 
 <template>

@@ -9,13 +9,19 @@ const props = defineProps({
 })
 
 const router = useRouter();
-const scrollToTop = useScroll;
 const loading = ref(true);
+
+// Smooth scroll method
+const scrollToTop = useScroll;
+
+// Cut link url
 const fixedLink = ref(null);
+
+// Response data
 const titan = ref(null);
 const currentInheritor = ref(null)
 
-
+// Titan api request
 const getTitan = async() => {
     loading.value = true;
 
@@ -42,6 +48,7 @@ const getTitan = async() => {
 
 getTitan();
 
+// Titan id watcher
 watch( () => props.id, () => {
     scrollToTop();
     getTitan();

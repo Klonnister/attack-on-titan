@@ -6,9 +6,11 @@ const props = defineProps({
     members: Array
 })
 
+// Characters separation
 const apiCharacters = ref([]);
 const notFoundCharacters = ref([]);
 
+// Character api request
 const getCharacter = async( url ) => {
     const resp = await fetch( url ).then( r => r.json() )
 

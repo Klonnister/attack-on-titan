@@ -24,6 +24,7 @@ const firstItem = ref(0);
 // Titans request to API
 const getTitans = async () => {
     loading.value = true;
+
     const queries = ref('');
 
     if ( newPage.value > 1 ) {
@@ -49,17 +50,23 @@ const getTitans = async () => {
             queries.value = `?allegiance=${allegiance.value.toLowerCase()}`
         }
     }
+    try {
+        const response = await fetch(`https://api.attackontitanapi.com/titans${queries.value}`).then( r => r.json() );
     
-    const response = await fetch(`https://api.attackontitanapi.com/titans${queries.value}`).then( r => r.json() );
+        titans.value = response.results;
+        pagesInfo.value = response.info;
+        loading.value = false;
+        scrollToTopRough();
 
-    titans.value = response.results;
-    pagesInfo.value = response.info;
-    loading.value = false;
-    scrollToTopRough();
+    } catch (error) {
+        titans.value = null;
+        loading.value = false;
+    }
 }
 
 getTitans();
 
+// Filter dropdown watchers
 watch(allegiance, ( newAllegiance ) => {
     if( newAllegiance === 'All' ) {
         allegiance.value = null
@@ -70,20 +77,7 @@ watch(allegiance, ( newAllegiance ) => {
     getTitans();
 })
 
-const searchTitan = () => {
-    newPage.value = 1;
-    firstItem.value = 0;
-
-    getTitans();
-}
-
-const onPaginate = ( event ) => {
-    newPage.value = event.page + 1;
-    firstItem.value = event.first;
-
-    getTitans();
-}
-
+// Filters methods
 const toggleShowFilters = () => {
     showFilters.value = !showFilters.value
 }
@@ -95,6 +89,21 @@ const clearFilters = () => {
     getTitans();
 }
 
+// Search method
+const searchTitan = () => {
+    newPage.value = 1;
+    firstItem.value = 0;
+
+    getTitans();
+}
+
+// Paginate method
+const onPaginate = ( event ) => {
+    newPage.value = event.page + 1;
+    firstItem.value = event.first;
+
+    getTitans();
+}
 
 </script>
 
@@ -204,37 +213,3 @@ const clearFilters = () => {
     </div>
     
 </template>
-
-<style>
-.p-inputtext {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-}
-
-.p-dropdown {
-    background-color: #202020;
-}
-
-.p-dropdown-item {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-}
-
-.p-paginator-current {
-    font-size: 14px;
-}
-
-.p-paginator {
-    padding: 1px 16px;
-}
-
-.p-highlight {
-    color: #FFFFFF;
-    background-color: #303030;
-}
-
-.paginator-page {
-    color: #C0C1C3;
-}
-
-</style>

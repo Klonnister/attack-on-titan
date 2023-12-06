@@ -3,8 +3,10 @@ import links from '@/composables/useLinks';
 import { ref } from 'vue';
 import { Icon } from '@iconify/vue';
 
+// Links composable
 const useLinks = links
 
+// Small screen navigation menu
 const showMenu = ref( false )
 
 const openMenu = () => {

@@ -6,14 +6,17 @@ const props = defineProps({
     members: Array
 })
 
+// Response data
 const titans = ref([]);
 
+// Titan api request
 const getTitan = async( url ) => {
     const resp = await fetch( url ).then( r => r.json() )
 
     titans.value.push( resp )
 }
 
+// Props titans iteration request
 if( props.members.length ) {
     props.members.forEach( member => {
         if( member.startsWith('https') && member.includes('titans') ) {

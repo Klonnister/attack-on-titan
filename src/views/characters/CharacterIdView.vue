@@ -2,19 +2,25 @@
 import { ref, watch } from 'vue';
 import fixLink from '@/composables/useFixLink';
 import useScroll from '@/composables/useScroll'
-import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
     id: Number
 })
 
 const router = useRouter();
+
+// Smooth scroll method
 const scrollToTop = useScroll;
-const loading = ref(true);
-const character = ref(null);
+// Cut img url
 const fixedLink = ref(null);
 
 
+// Page info
+const loading = ref(true);
+const character = ref(null);
+
+// Character api request
 const getCharacter = async() => {
     loading.value = true;
 

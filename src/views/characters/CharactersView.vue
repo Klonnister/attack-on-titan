@@ -4,7 +4,10 @@ import { ref, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 import Dropdown from 'primevue/dropdown';
 import Paginator from 'primevue/paginator';
-import { scrollToTopRough } from '@/composables/useScroll'
+import { scrollToTopRough } from '@/composables/useScroll';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 // Response data
 const loading = ref(true);
@@ -26,6 +29,7 @@ const firstItem = ref(0)
 // Characters request to API
 const getCharacters = async () => {
     loading.value = true;
+
     const queries = ref('');
 
     if ( newPage.value > 1 ) {
@@ -68,16 +72,22 @@ const getCharacters = async () => {
         }
     }
     
-    const response = await fetch(`https://api.attackontitanapi.com/characters${queries.value}`).then( r => r.json() );
-
-    characters.value = response.results;
-    pagesInfo.value = response.info;
-    loading.value = false;
-    scrollToTopRough();
+    try {
+        const response = await fetch(`https://api.attackontitanapi.com/characters${queries.value}`).then( r => r.json() );
+    
+        characters.value = response.results;
+        pagesInfo.value = response.info;
+        loading.value = false;
+        scrollToTopRough();
+    } catch (error) {
+        characters.value = null;
+        loading.value = false;
+    }
 }
 
 getCharacters();
 
+// Filters dropdown watchers
 watch(gender, ( newGender ) => {
     if( newGender === 'All' ) {
         gender.value = null
@@ -108,20 +118,7 @@ watch(occupation, ( newOccupation ) => {
     getCharacters();
 })
 
-const searchCharacter = () => {
-    newPage.value = 1;
-    firstItem.value = 0;
-
-    getCharacters();
-}
-
-const onPaginate = ( event ) => {
-    newPage.value = event.page + 1;
-    firstItem.value = event.first;
-
-    getCharacters();
-}
-
+// Filter methods
 const toggleShowFilters = () => {
     showFilters.value = !showFilters.value
 }
@@ -135,6 +132,21 @@ const clearFilters = () => {
     getCharacters();
 }
 
+// Search method
+const searchCharacter = () => {
+    newPage.value = 1;
+    firstItem.value = 0;
+
+    getCharacters();
+}
+
+// Pagination method
+const onPaginate = ( event ) => {
+    newPage.value = event.page + 1;
+    firstItem.value = event.first;
+
+    getCharacters();
+}
 
 </script>
 
@@ -264,45 +276,6 @@ const clearFilters = () => {
 </template>
 
 <style>
-.p-inputtext {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-}
-
-.p-dropdown {
-    background-color: #202020;
-}
-
-.p-dropdown-item {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-}
-
-.p-paginator-current {
-    font-size: 14px;
-}
-
-.p-paginator {
-    padding: 1px 16px;
-}
-
-.p-paginator-page {
-    transition: all 0.2s ease-in-out;
-}
-
-.p-paginator-page:hover {
-    background-color: #282828;
-}
-
-.p-highlight {
-    color: #FFFFFF;
-    background-color: #303030;
-}
-
-.paginator-page {
-    color: #C0C1C3;
-}
-
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease;

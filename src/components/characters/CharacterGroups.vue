@@ -5,6 +5,7 @@ const props = defineProps({
     groups: Array,
 });
 
+// Regiment logo checker
 const regiment = ref(null);
 
 if( props.groups.length ) {

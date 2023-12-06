@@ -8,6 +8,7 @@ const props = defineProps({
     status: String,
 })
 
+// Cut img url
 const fixedLink = ref(null);
 
 if( props.img ) {

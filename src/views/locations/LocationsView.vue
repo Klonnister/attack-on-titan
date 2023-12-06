@@ -7,9 +7,12 @@ import useFiltersList from '@/composables/useFiltersList';
 import { scrollToTopRough } from '@/composables/useScroll'
 
 const loading = ref(true);
+
+// Api request info
 const pagesInfo = ref(null);
 const locations = ref(null);
 
+// Filter variables
 const filtersList = useFiltersList;
 const showFilters = ref(false);
 const search = ref(null);
@@ -20,53 +23,50 @@ const territory = ref(null);
 const newPage = ref(1);
 const firstItem = ref(0);
 
+// Location api request
 const getLocations = async() => {
     loading.value = true;
-    const queries = ref('');
-    try {
-        if ( newPage.value > 1 ) {
-            if( queries.value.startsWith('?') ) {
-                queries.value = queries.value + '&page=' + newPage.value;
-            } else {
-                queries.value = `?page=${newPage.value}`
-            }
-        }
-    
-        if ( search.value ) {
-            if( queries.value.startsWith('?') ) {
-                queries.value = queries.value + '&name=' + search.value.toLowerCase();
-            } else {
-                queries.value = queries.value + '?name=' + search.value.toLowerCase();
-            }
-        }
-    
-        if ( region.value ) {
-            if( queries.value.startsWith('?') ) {
-                queries.value = queries.value + '&region=' + region.value.toLowerCase();
-            } else {
-                queries.value = `?region=${region.value.toLowerCase()}`
-            }
-        }
 
-        if ( territory.value ) {
-            if( queries.value.startsWith('?') ) {
-                queries.value = queries.value + '&territory=' + territory.value.toLowerCase();
-            } else {
-                queries.value = `?territory=${territory.value.toLowerCase()}`
-            }
+    const queries = ref('');
+
+    if ( newPage.value > 1 ) {
+        if( queries.value.startsWith('?') ) {
+            queries.value = queries.value + '&page=' + newPage.value;
+        } else {
+            queries.value = `?page=${newPage.value}`
         }
-    
+    }
+
+    if ( search.value ) {
+        if( queries.value.startsWith('?') ) {
+            queries.value = queries.value + '&name=' + search.value.toLowerCase();
+        } else {
+            queries.value = queries.value + '?name=' + search.value.toLowerCase();
+        }
+    }
+
+    if ( region.value ) {
+        if( queries.value.startsWith('?') ) {
+            queries.value = queries.value + '&region=' + region.value.toLowerCase();
+        } else {
+            queries.value = `?region=${region.value.toLowerCase()}`
+        }
+    }
+
+    if ( territory.value ) {
+        if( queries.value.startsWith('?') ) {
+            queries.value = queries.value + '&territory=' + territory.value.toLowerCase();
+        } else {
+            queries.value = `?territory=${territory.value.toLowerCase()}`
+        }
+    }
+
+    try {
         const response = await fetch(`https://api.attackontitanapi.com/locations${queries.value}`).then( r => r.json());
         
         pagesInfo.value = response.info
         locations.value = response.results;
         loading.value = false;
-
-        locations.value.forEach( loc => {
-            if( loc.notable_former_inhabitants.length ) {
-                console.log(loc.name)
-            }
-        })
 
     } catch (error) {
         
@@ -79,6 +79,7 @@ const getLocations = async() => {
 
 getLocations();
 
+// Filter dropdown watchers
 watch(region, ( newRegion ) => {
     if( newRegion === 'All' ) {
         region.value = null;
@@ -99,20 +100,7 @@ watch(territory, ( newTerritory ) => {
     getLocations();
 })
 
-const searchLocations = () => {
-    newPage.value = 1;
-    firstItem.value = 0;
-
-    getLocations();
-}
-
-const onPaginate = ( event ) => {
-    firstItem.value = event.first;
-    newPage.value = event.page + 1;
-    getLocations();
-    scrollToTopRough();
-}
-
+// Filter methods
 const toggleShowFilters = () => {
     showFilters.value = !showFilters.value
 }
@@ -121,6 +109,22 @@ const clearFilters = () => {
     search.value = '';
     region.value = '';
     territory.value = '';
+}
+
+// Search method
+const searchLocations = () => {
+    newPage.value = 1;
+    firstItem.value = 0;
+
+    getLocations();
+}
+
+// Pagination methods
+const onPaginate = ( event ) => {
+    firstItem.value = event.first;
+    newPage.value = event.page + 1;
+    getLocations();
+    scrollToTopRough();
 }
 
 </script>
@@ -241,36 +245,3 @@ const clearFilters = () => {
         </div>
     </div>
 </template>
-
-<style>
-.p-inputtext {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-}
-
-.p-dropdown {
-    background-color: #202020;
-}
-
-.p-dropdown-item {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-}
-
-.p-paginator-current {
-    font-size: 14px;
-}
-
-.p-paginator {
-    padding: 1px 16px;
-}
-
-.p-highlight {
-    color: #FFFFFF;
-    background-color: #303030;
-}
-
-.paginator-page {
-    color: #C0C1C3;
-}
-</style>

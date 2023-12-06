@@ -1,6 +1,7 @@
 <script setup>
 import useScroll from '@/composables/useScroll'
 
+// Smooth scroll
 const scrollToTop = useScroll
 </script>
 

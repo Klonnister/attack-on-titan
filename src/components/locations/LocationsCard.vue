@@ -7,6 +7,7 @@ const props = defineProps({
     img: { type: String, required: true },
 })
 
+// Cut img url
 const fixedLink = ref(null);
 
 if ( props.img !== 'unknown' ){

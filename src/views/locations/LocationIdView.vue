@@ -1,7 +1,7 @@
 <script setup>
-import { ref } from 'vue';
-import { Icon } from '@iconify/vue';
+import { ref, watch } from 'vue';
 import fixLink from '@/composables/useFixLink';
+import useScroll from '@/composables/useScroll';
 import { useRouter } from 'vue-router';
 
 const props = defineProps({
@@ -13,11 +13,19 @@ const props = defineProps({
 
 const router = useRouter();
 const loading = ref(true);
-const fixedLink = ref(null);
+
+// Smooth scroll method
+const scrollToTop = useScroll;
+
+// Request info
 const location =  ref(null);
 const debut = ref(null);
 
-const getEpisode = async() => {
+// Cut img url
+const fixedLink = ref(null);
+
+// Episode api request
+const getLocation = async() => {
     try {
         loading.value = true;
         const response = await fetch(`https://api.attackontitanapi.com/locations/${props.id}`).then( r => r.json() );
@@ -43,7 +51,13 @@ const getEpisode = async() => {
         router.push( { name: 'not-found' } )
     }
 }
-getEpisode();
+getLocation();
+
+// Titan id watcher
+watch( () => props.id, () => {
+    scrollToTop();
+    getLocation();
+})
 
 </script>
 
@@ -55,22 +69,15 @@ getEpisode();
                     {{ location.name }}
                 </p>
 
-                <a
+                <div
                   v-if="fixedLink"
-                  :href="fixedLink"
-                  class="relative flex justify-center items-center hover:scale-105 transition-all ease-in-out duration-300 img-hoverable"
-                  target="_blank"
+                  class="flex justify-center items-center"
                 >
                     <img
                       :src="fixedLink ? fixedLink : '/noimage.jpg'"
                       alt=""
                     >
-                    <Icon
-                        icon="mdi:eye"
-                        class="absolute text-gray-700 w-8 h-8 opacity-40 transition-all ease-in-out duration-300 img-icon"
-                        v-if="fixedLink"
-                    />
-                </a>
+            </div>
                 <div class="relative flex justify-center items-center" v-else>
                     <img
                       src="/noimagewide.jpg"
@@ -150,9 +157,3 @@ getEpisode();
         </div>
     </div>
 </template>
-
-<style scoped>
-.img-hoverable:hover > .img-icon {
-    opacity: 80%;
-}
-</style>

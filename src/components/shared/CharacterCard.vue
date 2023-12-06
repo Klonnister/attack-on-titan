@@ -8,6 +8,7 @@ const props = defineProps({
     status: String,
 })
 
+// Cut img url
 const fixedLink = ref(null);
 
 if( props.img ) {
@@ -15,7 +16,6 @@ if( props.img ) {
         fixedLink.value = fixLink( props.img );
     }
 }
-
 </script>
 
 <template>
