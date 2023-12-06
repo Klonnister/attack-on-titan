@@ -3,7 +3,7 @@
         <h2 class="text-xl sm:text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">About</h2>
     
         <p class="text-sm md:text-base text-justify lg:text-center leading-8 sm:leading-9 md:leading-10 mb-10 sm:mb-6 md:mb-8">
-            This is a fan made webpage created with the purpose of practicing web design and consuming APIs. All the information here is accessible at the <a href="https://www.attackontitanapi.com/" class="text-[#FFFFFF]">Attack on Titan API</a>.
+            This is a fan made webpage created with the purpose of practicing web design and consuming APIs. All the information here is accessible at the <a href="https://www.attackontitanapi.com/" class="text-[#FFFFFF]">Attack on Titan API</a> by <a href="https://github.com/ZachMcM" class="text-[#FFFFFF]">Zach McMullen</a>.
         </p>
     
         <p class="text-sm md:text-base text-justify lg:text-center leading-8 sm:leading-9 md:leading-10 mb-10 sm:mb-6 md:mb-8">
