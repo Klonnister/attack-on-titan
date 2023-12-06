@@ -1,15 +1,16 @@
 <script setup>
 import { ref, watch } from 'vue';
 import fixLink from '@/composables/useFixLink';
-import { scrollToTopRough } from '@/composables/useScroll'
-import { useRouter } from 'vue-router'
+import { scrollToTopRough } from '@/composables/useScroll';
+import { useRouter } from 'vue-router';
+import { onBeforeRouteLeave } from 'vue-router';
 
 const props = defineProps({
     id: Number
 })
 
 const router = useRouter();
-const loading = ref(false);
+const loading = ref(true);
 const character = ref(null);
 const fixedLink = ref(null);
 
@@ -47,12 +48,19 @@ watch( () => props.id, () => {
     getCharacter();
 })
 
+onBeforeRouteLeave( (to, from, next) => {
+    loading.value = true;
+    setTimeout( () => {
+        next();
+    }, 100)
+})
+
 </script>
 
 <template>
     <Transition name="fade">
         <div class="w-full my-10 flex justify-center" v-if="!loading">
-            <div class="w-full flex flex-col gap-8 lg:gap-16 items-center justify-center lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl"> 
+            <div class="w-full flex flex-col gap-8 lg:gap-16 items-center justify-center lg:max-w-xl xl:max-w-2xl 2xl:max-w-3xl">  
                 <div class="flex flex-col gap-6 lg:col-span-2">
                     <div class="relative flex justify-center items-center">               
                         <img
@@ -115,7 +123,7 @@ watch( () => props.id, () => {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.5s ease;
 }
 
 .fade-enter-from,

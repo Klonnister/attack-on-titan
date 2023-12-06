@@ -5,6 +5,7 @@ import { ref, watch } from 'vue';
 import trailersList from '@/composables/useTrailersList';
 import useFiltersList from '@/composables/useFiltersList';
 import scrollToTop from '@/composables/useScroll'
+import { onBeforeRouteLeave } from 'vue-router';
 
 const loading = ref(true);
 const pagesInfo = ref(null);
@@ -122,181 +123,164 @@ const getPrevSeason = () => {
     }
 }
 
+onBeforeRouteLeave( (to, from, next) => {
+    loading.value = true;
+    setTimeout( () => {
+        loading.value = false;
+        next()
+    }, 200)
+})
+
 </script>
 
 <template>
-    <div class="my-8 w-full flex flex-col gap-28" v-if="!loading">
-            
-        <div class="w-full text-xs text-center flex flex-col items-center gap-8">
-            <div class="flex items-center mb-10 gap-8">
-                <button
-                  class="p-3 rounded-full transition-all ease-in-out duration-300"
-                  :class=" { 'hover:bg-[#232323]': prevSeason } "
-                  @click="getPrevSeason"
-                >
-                    <Icon 
-                      icon="ep:arrow-left-bold"
-                      class="w-4 h-4"
-                      :class="prevSeason ? 'text-[#C0C1C3]' : 'text-[#606060]'"
-                    />
-                </button>
-
-                <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat 
-                font-bold text-center"> {{ season }} </h2>
-
-                <button
-                  class="p-3 rounded-full transition-all ease-in-out duration-300"
-                  :class=" { 'hover:bg-[#232323]': nextSeason <= 4 } "
-                  @click="getNextSeason"
-                >
-                    <Icon 
-                      icon="ep:arrow-right-bold"
-                      class="w-4 h-4 text-[#C0C1C3]"
-                      :class="nextSeason <= 4 ? 'text-[#C0C1C3]' : 'text-[#606060]'"
-                    />
-                </button>
-            </div>
-
-            <p class="font-semibold font-montserrat text-center uppercase text-base md:text-lg lg:text-xl">Trailer</p>
-
-            <div class="w-full max-w-xl flex flex-col items-center">
-                <iframe
-                class="w-full h-56 min-[475px]:h-80 lg:h-80"
-                :src="trailersList[season].url"
-                title="Youtube Video Player"
-                frameborder="0"
-                allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-                >
-                </iframe>
-                
-                <p class="text-sm mt-4" v-if="trailersList[season].type === 'fanmade'">
-                    {{ trailersList[season].title }}
-                    fan-made trailer by
-                    <a
-                    :href="trailersList[season].channel"
-                    class="text-[#FFFFFF]"
-                    >
-                    {{ trailersList[season].author }}
-                    </a>
-                </p>
-
-                <p class="text-sm mt-2" v-else>
-                    {{ trailersList[season].title }}
-                    Official Trailer
-                </p>
-            </div>
-
-        </div>
-
-        <div v-if="!loading && episodes" class="flex flex-col gap-12 lg:gap-14">
-            <div class="flex flex-col gap-4 lg:gap-8">
-                <p class="font-semibold font-montserrat text-center uppercase text-base md:text-lg lg:text-xl" id="listTitle">Episodes list</p>
-
-                <div class="mx-auto w-full md:max-w-lg 2xl:max-w-xl flex">
-                    <input
-                        v-model="search"
-                        id="search"
-                        type="search"
-                        placeholder="Search name..."
-                        class="grow py-2 bg-[#202020] px-2 min-[350px]:px-4 rounded-s-lg text-sm lg:text-base"
-                        @keyup.enter="searchEpisodes"
-                    >
-                    
+    <Transition name="fade">
+        <div class="my-8 w-full flex flex-col items-center gap-28" v-if="!loading">
+            <div class="w-full text-xs text-center flex flex-col items-center gap-8">
+                <div class="flex items-center mb-10 gap-8">
                     <button
-                        class="bg-[#202020] px-3 rounded-e-lg border-s border-s-2 border-[#000000]"
-                        @click="searchEpisodes"
+                      class="py-3 px-2 h-full rounded-sm transition-all ease-in-out duration-300"
+                      :class=" { 'hover:bg-[#232323]': prevSeason } "
+                      @click="getPrevSeason"
                     >
-                    
-                        <Icon
-                            icon="bx:search-alt-2"
-                            class="w-6 h-6"
+                        <Icon 
+                          icon="ep:arrow-left-bold"
+                          class="w-4 h-4"
+                          :class="prevSeason ? 'text-[#C0C1C3]' : 'text-[#606060]'"
+                        />
+                    </button>
+    
+                    <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat 
+                    font-bold text-center"> {{ season }} </h2>
+    
+                    <button
+                      class="py-3 px-2 h-full rounded-sm transition-all ease-in-out duration-300"
+                      :class=" { 'hover:bg-[#232323]': nextSeason <= 4 } "
+                      @click="getNextSeason"
+                    >
+                        <Icon 
+                          icon="ep:arrow-right-bold"
+                          class="w-4 h-4 text-[#C0C1C3]"
+                          :class="nextSeason <= 4 ? 'text-[#C0C1C3]' : 'text-[#606060]'"
                         />
                     </button>
                 </div>
-            </div>
-
-            <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 md:gap-x-10 gap-y-10 xl:gap-12 2xl:gap-16">
-                <a
-                    v-for="episode in episodes"
-                    :key="episode.id"
-                    href="https://www.crunchyroll.com/es-es/series/GR751KNZY/attack-on-titan"
-                    target="_blank"
-                    class="flex justify-center"
-                >
-                    <EpisodeCard 
-                        :code="episode.episode"
-                        :name="episode.name"
-                        :img="episode.img"
-                    />  
-                </a>
-            </div>
-
-            <div class="card md:mx-auto">
-                <Paginator
-                    :template="{
-                        '640px': 'PrevPageLink CurrentPageReport NextPageLink',
-                        '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
-                        '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-                    }"
-                    :rows="20"
-                    :totalRecords="pagesInfo.count"
-                    v-model:first="firstItem"
-                    :pageLinkSize="7"
-                    @page="onPaginate"
-                    class="md:max-w-2xl"
-                    >
-                </Paginator>
-            </div>
-        </div>
-
+                
+                <Transition name="fade">
+                    <div class="w-full max-w-xl flex flex-col items-center" v-if="season">
+                        <iframe
+                        class="w-full h-56 min-[475px]:h-80 lg:h-80"
+                        :src="trailersList[season].url"
+                        title="Youtube Video Player"
+                        frameborder="0"
+                        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen
+                        >
+                        </iframe>
+                        
+                        <p class="text-sm mt-4" v-if="trailersList[season].type === 'fanmade'">
+                            {{ trailersList[season].title }}
+                            fan-made trailer by
+                            <a
+                            :href="trailersList[season].channel"
+                            class="text-[#FFFFFF]"
+                            >
+                            {{ trailersList[season].author }}
+                            </a>
+                        </p>
         
-
-        <div
-          class="w-full py-20 flex justify-center font-montserrat text-lg "
-          v-else-if="loading"
-        >
-            Loading...
+                        <p class="text-sm mt-2" v-else>
+                            {{ trailersList[season].title }}
+                            Official Trailer
+                        </p>
+                    </div>
+                </Transition>
+    
+            </div>
+    
+            <div class="flex flex-col gap-12 lg:gap-14">
+                <div class="flex flex-col gap-4 lg:gap-8">
+                    <p class="font-semibold font-montserrat text-center uppercase text-base md:text-lg lg:text-xl" id="listTitle">Episodes list</p>
+    
+                    <div class="mx-auto w-full md:max-w-lg 2xl:max-w-xl flex">
+                        <input
+                            v-model="search"
+                            id="search"
+                            type="search"
+                            placeholder="Search name..."
+                            class="grow py-2 bg-[#202020] px-2 min-[350px]:px-4 rounded-s-lg text-sm lg:text-base"
+                            @keyup.enter="searchEpisodes"
+                        >
+                        
+                        <button
+                            class="bg-[#202020] px-3 rounded-e-lg border-s border-s-2 border-[#000000]"
+                            @click="searchEpisodes"
+                        >
+                        
+                            <Icon
+                                icon="bx:search-alt-2"
+                                class="w-6 h-6"
+                            />
+                        </button>
+                    </div>
+                </div>
+    
+                <div class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-x-6 md:gap-x-10 gap-y-10 xl:gap-12 2xl:gap-16" v-if="!loading && episodes">
+                    <a
+                        v-for="episode in episodes"
+                        :key="episode.id"
+                        href="https://www.crunchyroll.com/es-es/series/GR751KNZY/attack-on-titan"
+                        target="_blank"
+                        class="flex justify-center"
+                    >
+                        <EpisodeCard 
+                            :code="episode.episode"
+                            :name="episode.name"
+                            :img="episode.img"
+                        />  
+                    </a>
+                </div>
+    
+                <div
+                    class="w-full py-28 flex justify-center font-montserrat text-lg "
+                    v-else
+                >
+                    No results found
+                </div>
+    
+                <div class="card md:mx-auto">
+                    <Paginator
+                        :template="{
+                            '640px': 'PrevPageLink CurrentPageReport NextPageLink',
+                            '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
+                            '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
+                        }"
+                        :rows="20"
+                        :totalRecords="pagesInfo.count"
+                        v-model:first="firstItem"
+                        :pageLinkSize="7"
+                        @page="onPaginate"
+                        class="md:max-w-2xl"
+                        >
+                    </Paginator>
+                </div>
+            </div>
         </div>
+    </Transition>
 
-        <div
-          class="w-full py-28 flex justify-center font-montserrat text-lg "
-          v-else
-        >
-            No results found
-        </div>
-    </div>
 </template>
 
-<style>
-.p-inputtext {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
+<style scoped>
+.fade-enter-active {
+    transition: opacity 1s ease;
+}
+.fade-leave-active {
+    transition: opacity 0.5s ease;
 }
 
-.p-dropdown {
-    background-color: #202020;
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
-.p-dropdown-item {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-}
-
-.p-paginator-current {
-    font-size: 14px;
-}
-
-.p-paginator {
-    padding: 1px 16px;
-}
-
-.p-highlight {
-    color: #FFFFFF;
-    background-color: #303030;
-}
-
-.paginator-page {
-    color: #C0C1C3;
-}
 </style>

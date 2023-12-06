@@ -15,7 +15,7 @@ fixedLink.value = fixLink( props.img );
 </script>
 
 <template>
-    <div class="flex flex-col gap-3 items-center h-full max-w-[165px] sm:max-w-[200px]" v-if="fixedLink">
+    <div class="flex flex-col gap-3 items-center h-full max-w-[165px] sm:max-w-[200px] hover:-translate-y-1 transition-all duration-300 ease-out" v-if="fixedLink">
         <div class="relative flex justify-center items-center">
             <img
               :src="fixedLink ? fixedLink : '/noimage.jpg'"

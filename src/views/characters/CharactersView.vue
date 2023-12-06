@@ -4,10 +4,11 @@ import { ref, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 import Dropdown from 'primevue/dropdown';
 import Paginator from 'primevue/paginator';
-import { scrollToTopRough } from '@/composables/useScroll'
+import { scrollToTopRough } from '@/composables/useScroll';
+import { onBeforeRouteLeave } from 'vue-router';
 
 // Response data
-const loading = ref(true);
+const loading = ref(false);
 const characters = ref(null);
 const pagesInfo = ref(null);
 
@@ -134,6 +135,15 @@ const clearFilters = () => {
     newPage.value = 1;
     getCharacters();
 }
+
+onBeforeRouteLeave( (to, from, next) => {
+    if( !to.path.includes('character') )
+    loading.value = true;
+    setTimeout( () => {
+        next();
+        loading.value = false;
+    }, 200)
+})
 </script>
 
 <template>
@@ -249,66 +259,13 @@ const clearFilters = () => {
             </div>
         </div>
     </Transition>
-
-    <Transition name="fade-slow">
-        <div
-            class="w-full min-h-screen flex justify-center items-center font-montserrat text-lg fixed top-0 left-0"
-            v-if="loading"
-        >   
-            Loading...
-        </div>
-    </Transition>
-    
+   
 </template>
 
-<style>
-.p-inputtext {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-}
-
-.p-dropdown {
-    background-color: #202020;
-}
-
-.p-dropdown-item {
-    padding: 0.5rem 1rem;
-    font-size: 14px;
-}
-
-.p-paginator-current {
-    font-size: 14px;
-}
-
-.p-paginator {
-    padding: 1px 16px;
-}
-
-.p-link {
-    transition: all 0.3s ease-in-out;
-}
-
-.p-link:hover {
-    background-color: #282828;
-}
-
-.p-highlight {
-    color: #FFFFFF;
-    background-color: #303030;
-}
-
-.p-highlight:hover {
-    color: #FFFFFF;
-    background-color: #303030;
-}
-
-.paginator-page {
-    color: #C0C1C3;
-}
-
+<style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease;
 }
 
 .fade-enter-from,
@@ -316,16 +273,4 @@ const clearFilters = () => {
   opacity: 0;
 }
 
-.fade-slow-enter-active {
-  transition: opacity 1s ease;
-}
-
-.fade-slow-leave-active .fade-slow-enter-active {
-  transition: opacity 0.2s ease;
-}
-
-.fade-slow-enter-from,
-.fade-slow-leave-to {
-  opacity: 0;
-}
 </style>

@@ -36,7 +36,7 @@ onBeforeRouteLeave( (to, from, next) => {
     
             <NavBar />
     
-                <div class="grow pt-10 py-16 flex justify-center items-center w-full">
+                <div class="grow pt-10 py-16 flex flex-col justify-center items-center w-full">
                     <RouterView />
                 </div>
     
