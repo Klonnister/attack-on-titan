@@ -54,18 +54,24 @@ const router = createRouter({
 
         {
           path: 'locations',
-          name: 'locations',
-          component: () => import('../views/locations/LocationsView.vue')
-        },
+          component: () => import('../views/locations/LocationsGroup.vue'),
+          children: [
+            {
+              path: ':id',
+              name: 'locations-id',
+              component: () => import('../views/locations/LocationIdView.vue'),
+              props: ( route ) => {
+                const id = Number(route.params.id)
+                return { id }
+              }
+            },
 
-        {
-          path: 'locations/:id',
-          name: 'locations-id',
-          component: () => import('../views/locations/LocationIdView.vue'),
-          props: ( route ) => {
-            const id = Number(route.params.id)
-            return { id }
-          }
+            {
+              path: '',
+              name: 'locations',
+              component: () => import('../views/locations/LocationsView.vue'),
+            }  
+          ],
         },
 
         {

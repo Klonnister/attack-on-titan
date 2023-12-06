@@ -15,7 +15,7 @@ if ( props.img !== 'unknown' ){
 </script>
 
 <template>
-    <div class="flex flex-col gap-3 items-center h-full justify-center">
+    <div class="flex flex-col gap-3 items-center h-full justify-center hover:-translate-y-1 transition-all duration-300 ease-out">
         <div class="relative flex justify-center items-center">
             <img
               :src="fixedLink ? fixedLink : '/noimagewide.jpg'"
