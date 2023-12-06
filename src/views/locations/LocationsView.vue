@@ -64,12 +64,6 @@ const getLocations = async() => {
         loading.value = false;
         scrollToTopRough();
 
-        locations.value.forEach( loc => {
-            if( loc.notable_former_inhabitants.length ) {
-                console.log(loc.name)
-            }
-        })
-
     } catch (error) {
         
         console.log(error)
@@ -125,7 +119,6 @@ const clearFilters = () => {
 }
 
 onBeforeRouteLeave( (to, from, next) => {
-    console.log(to)
     if( !to.path.includes('location') ){
         loading.value = true;
         setTimeout( () => {
