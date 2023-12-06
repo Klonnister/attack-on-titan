@@ -24,10 +24,10 @@ const closeMenu = () => {
         <nav class="w-full flex justify-between items-center 2xl:px-4">
 
             <div
-              class="absolute left-0 top-0 w-full transition-all ease-in-out duration-200 lg:-translate-y-full"
+              class="fixed left-0 top-0 w-full transition-all ease-in-out duration-300 lg:-translate-y-full z-20"
               :class="showMenu ? '' : '-translate-y-full blur'"
             >
-                <div class="bg-black opacity-[95%] min-h-screen z-10 flex items-center justify-center relative p-16">
+                <div class="bg-black opacity-[90%] min-h-screen z-10 flex items-center justify-center relative p-16">
                     <button class="absolute right-10 top-10" @click="closeMenu">
                         <Icon
                             icon="mingcute:close-fill"
@@ -100,7 +100,8 @@ const closeMenu = () => {
 <style scoped>
 
 .router-link-exact-active {
-    background-color: #131313;
+    opacity: 100%;
+    color: white;
 }
 
 @media screen and ( min-width: 1024px ) {
