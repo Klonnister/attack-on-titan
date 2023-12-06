@@ -157,23 +157,25 @@ const onPaginate = ( event ) => {
         </div>
 
         <div>
-            <div class="flex justify-center flex-wrap gap-2 md:max-w-lg lg:max-w-xl xl:max-w-2xl md:mx-auto" v-if="showFilters">
-                <Dropdown
-                  v-model="region"
-                  :options="filtersList.regionsList"
-                  placeholder="Region"
-                  class="grow md:min-w-sm rounded-lg"
-                  :loading="loading"
-                />
-    
-                <Dropdown
-                  v-model="territory"
-                  :options="filtersList.territoriesList"
-                  placeholder="Territory"
-                  class="grow rounded-lg"
-                  :loading="loading"
-                />
-            </div>
+            <Transition name="fade">
+                <div class="flex justify-center flex-wrap gap-2 md:max-w-lg lg:max-w-xl xl:max-w-2xl md:mx-auto" v-if="showFilters">
+                    <Dropdown
+                      v-model="region"
+                      :options="filtersList.regionsList"
+                      placeholder="Region"
+                      class="grow md:min-w-sm rounded-lg"
+                      :loading="loading"
+                    />
+        
+                    <Dropdown
+                      v-model="territory"
+                      :options="filtersList.territoriesList"
+                      placeholder="Territory"
+                      class="grow rounded-lg"
+                      :loading="loading"
+                    />
+                </div>
+            </Transition>
             
             <div class="w-full flex justify-center gap-2 mb-2">
                 <button
