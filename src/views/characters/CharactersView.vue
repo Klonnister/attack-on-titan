@@ -4,11 +4,10 @@ import { ref, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 import Dropdown from 'primevue/dropdown';
 import Paginator from 'primevue/paginator';
-import { scrollToTopRough } from '@/composables/useScroll';
-import { onBeforeRouteLeave } from 'vue-router';
+import { scrollToTopRough } from '@/composables/useScroll'
 
 // Response data
-const loading = ref(false);
+const loading = ref(true);
 const characters = ref(null);
 const pagesInfo = ref(null);
 
@@ -136,136 +135,177 @@ const clearFilters = () => {
     getCharacters();
 }
 
-onBeforeRouteLeave( (to, from, next) => {
-    if( !to.path.includes('character') )
-    loading.value = true;
-    setTimeout( () => {
-        next();
-        loading.value = false;
-    }, 200)
-})
+
 </script>
 
 <template>
-    <Transition name="fade">
-        <div class="w-full my-4" v-if="!loading">
-            <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">Characters</h2>
     
-            <div class="mx-auto w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl flex mb-2">
-                <input
-                  v-model="search"
-                  id="search"
-                  type="search"
-                  placeholder="Search name..."
-                  class="grow py-3 bg-[#202020] px-2 min-[350px]:px-4 rounded-s-lg text-sm lg:text-base"
-                  @keyup.enter="searchCharacter"
-                >
-                <button
-                  class="bg-[#202020] px-3 rounded-e-lg border-s border-s-2 border-[#000000]"
-                  @click="searchCharacter"
-                >
-                    <Icon
-                      icon="bx:search-alt-2"
-                      class="w-6 h-6"
+    <div class="w-full my-4">
+        <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">Characters</h2>
+
+        <div class="mx-auto w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl flex mb-2">
+            <input
+              v-model="search"
+              id="search"
+              type="search"
+              placeholder="Search name..."
+              class="grow py-3 bg-[#202020] px-2 min-[350px]:px-4 rounded-s-lg text-sm lg:text-base"
+              @keyup.enter="searchCharacter"
+            >
+            <button
+              class="bg-[#202020] px-3 rounded-e-lg border-s border-s-2 border-[#000000]"
+              @click="searchCharacter"
+            >
+                <Icon
+                  icon="bx:search-alt-2"
+                  class="w-6 h-6"
+                />
+            </button>
+        </div>
+
+        <div>
+            <Transition name="fade">
+                <div class="flex justify-center flex-wrap gap-2 md:max-w-lg lg:max-w-xl xl:max-w-2xl md:mx-auto" v-if="showFilters">
+                    <Dropdown
+                      v-model="gender"
+                      :options="filtersList.gendersList"
+                      placeholder="Gender"
+                      class="grow md:min-w-sm rounded-lg"
+                      :loading="loading"
                     />
+        
+                    <Dropdown
+                      v-model="status"
+                      :options="filtersList.statusList"
+                      placeholder="Status"
+                      class="grow rounded-lg"
+                      :loading="loading"
+                    />
+        
+                    <Dropdown
+                      v-model="occupation"
+                      :options="filtersList.occupationsList"
+                      placeholder="Occupation"
+                      class="w-full md:w-max md:grow md:w-14rem rounded-lg"
+                      :loading="loading"
+                    />
+                </div>
+            </Transition>
+            
+            <div class="w-full flex justify-center gap-2 mb-2">
+                <button
+                  class="px-2 py-1 my-1 rounded-lg text-sm"
+                  @click="toggleShowFilters"
+                >
+                    {{ showFilters ? 'Hide Filters' : 'Show Filters'  }} 
+                </button>
+    
+                <button
+                  class="px-2 py-1 my-1 rounded-lg text-sm"
+                  @click="clearFilters"
+                  v-if="gender || status || occupation || search"
+                >
+                    Clear filters
                 </button>
             </div>
-    
-            <div>
-                <Transition name="fade">
-                    <div class="flex justify-center flex-wrap gap-2 md:max-w-lg lg:max-w-xl xl:max-w-2xl md:mx-auto" v-if="showFilters">
-                        <Dropdown
-                          v-model="gender"
-                          :options="filtersList.gendersList"
-                          placeholder="Gender"
-                          class="grow md:min-w-sm rounded-lg"
-                          :loading="loading"
-                        />
-            
-                        <Dropdown
-                          v-model="status"
-                          :options="filtersList.statusList"
-                          placeholder="Status"
-                          class="grow rounded-lg"
-                          :loading="loading"
-                        />
-            
-                        <Dropdown
-                          v-model="occupation"
-                          :options="filtersList.occupationsList"
-                          placeholder="Occupation"
-                          class="w-full md:w-max md:grow md:w-14rem rounded-lg"
-                          :loading="loading"
-                        />
-                    </div>
-                </Transition>
-                
-                <div class="w-full flex justify-center gap-2 mb-2">
-                    <button
-                      class="px-2 py-1 my-1 rounded-lg text-sm"
-                      @click="toggleShowFilters"
-                    >
-                        {{ showFilters ? 'Hide Filters' : 'Show Filters'  }} 
-                    </button>
+        </div>
         
-                    <button
-                      class="px-2 py-1 my-1 rounded-lg text-sm"
-                      @click="clearFilters"
-                      v-if="gender || status || occupation || search"
-                    >
-                        Clear filters
-                    </button>
-                </div>
-            </div>
-            
-            <div v-if="characters" class="flex flex-col">
-                <div class="py-10 lg:py-20 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10 sm:gap-12 2xl:gap-16">
-                    <router-link
-                        v-for="character in characters"
-                        :key="character.id"
-                        :to="{ name: 'character-id', params: { id: character.id }}"
-                    >
-                        <CharacterCard 
-                            :name="character.name"
-                            :img="character.img ? character.img : ''"
-                            :status="character.status"
-                        />
-                    </router-link>
-                </div>
-    
-                <div class="card md:mx-auto">
-                    <Paginator
-                        :template="{
-                            '640px': 'PrevPageLink CurrentPageReport NextPageLink',
-                            '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
-                            '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-                        }"
-                        :rows="20"
-                        :totalRecords="pagesInfo.count"
-                        v-model:first="firstItem"
-                        :pageLinkSize="7"
-                        @page="onPaginate"
-                        class="md:max-w-2xl"
-                        >
-                    </Paginator>
-                </div>
+
+        <div v-if="!loading && characters" class="flex flex-col">
+            <div class="py-10 lg:py-20 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-10 sm:gap-12 2xl:gap-16">
+                <router-link
+                    v-for="character in characters"
+                    :key="character.id"
+                    :to="{ name: 'character-id', params: { id: character.id }}"
+                >
+                    <CharacterCard 
+                        :name="character.name"
+                        :img="character.img ? character.img : ''"
+                        :status="character.status"
+                    />
+                </router-link>
             </div>
 
-            <div
-                class="w-full py-28 flex justify-center font-montserrat text-lg "
-                v-else
-            >
-                No results found
+            <div class="card md:mx-auto">
+                <Paginator
+                    :template="{
+                        '640px': 'PrevPageLink CurrentPageReport NextPageLink',
+                        '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
+                        '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
+                    }"
+                    :rows="20"
+                    :totalRecords="pagesInfo.count"
+                    v-model:first="firstItem"
+                    :pageLinkSize="7"
+                    @page="onPaginate"
+                    class="md:max-w-2xl"
+                    >
+                </Paginator>
             </div>
         </div>
-    </Transition>
-   
+
+        
+
+        <div
+          class="w-full py-20 flex justify-center font-montserrat text-lg "
+          v-else-if="loading"
+        >
+            Loading...
+        </div>
+
+        <div
+          class="w-full py-28 flex justify-center font-montserrat text-lg "
+          v-else
+        >
+            No results found
+        </div>
+    </div>
+    
 </template>
 
-<style scoped>
+<style>
+.p-inputtext {
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+}
+
+.p-dropdown {
+    background-color: #202020;
+}
+
+.p-dropdown-item {
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+}
+
+.p-paginator-current {
+    font-size: 14px;
+}
+
+.p-paginator {
+    padding: 1px 16px;
+}
+
+.p-paginator-page {
+    transition: all 0.2s ease-in-out;
+}
+
+.p-paginator-page:hover {
+    background-color: #282828;
+}
+
+.p-highlight {
+    color: #FFFFFF;
+    background-color: #303030;
+}
+
+.paginator-page {
+    color: #C0C1C3;
+}
+
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.2s ease;
 }
 
 .fade-enter-from,

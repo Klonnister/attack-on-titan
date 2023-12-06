@@ -4,8 +4,7 @@ import { ref, watch } from 'vue';
 import { Icon } from '@iconify/vue';
 import Dropdown from 'primevue/dropdown';
 import Paginator from 'primevue/paginator';
-import { scrollToTopRough } from '@/composables/useScroll';
-import { onBeforeRouteLeave } from 'vue-router';
+import { scrollToTopRough } from '@/composables/useScroll'
 
 // Response data
 const loading = ref(true);
@@ -96,111 +95,113 @@ const clearFilters = () => {
     getTitans();
 }
 
-onBeforeRouteLeave( (to, from, next) => {
-    loading.value = true;
-    setTimeout( () => {
-        loading.value = false;
-        next()
-    }, 200)
-})
 
 </script>
 
 <template>
-    <Transition name="fade">
-        <div class="w-full my-4" v-if="!loading">
-            <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">Titans</h2>
     
-            <div class="mx-auto w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl flex mb-2">
-                <input
-                  v-model="search"
-                  id="search"
-                  type="search"
-                  placeholder="Search name..."
-                  class="grow py-3 bg-[#202020] px-2 min-[350px]:px-4 rounded-s-lg text-sm lg:text-base"
-                  @keyup.enter="searchTitan"
-                >
-                <button
-                  class="bg-[#202020] px-3 rounded-e-lg border-s border-s-2 border-[#000000]"
-                  @click="searchTitan"
-                >
-                    <Icon
-                      icon="bx:search-alt-2"
-                      class="w-6 h-6"
-                    />
-                </button>
-            </div>
-    
-            <div>
-                <div class="flex justify-center flex-wrap gap-2 md:max-w-lg lg:max-w-xl xl:max-w-2xl md:mx-auto" v-if="showFilters">
-                    <Dropdown
-                      v-model="allegiance"
-                      :options="filtersList.allegiancesList"
-                      placeholder="Allegiance"
-                      class="grow md:min-w-sm rounded-lg"
-                      :loading="loading"
-                    />
-                </div>
-                
-                <div class="w-full flex justify-center gap-2 mb-2">
-                    <button
-                      class="px-2 py-1 my-1 rounded-lg text-sm"
-                      @click="toggleShowFilters"
-                    >
-                        {{ showFilters ? 'Hide Filters' : 'Show Filters'  }} 
-                    </button>
-        
-                    <button
-                      class="px-2 py-1 my-1 rounded-lg text-sm"
-                      @click="clearFilters"
-                      v-if="allegiance || search"
-                    >
-                        Clear filters
-                    </button>
-                </div>
+    <div class="w-full my-4">
+        <h2 class="text-2xl lg:text-3xl text-[#D8D8D8] uppercase font-montserrat font-bold text-center mb-6">Titans</h2>
+
+        <div class="mx-auto w-full md:max-w-lg lg:max-w-xl xl:max-w-2xl flex mb-2">
+            <input
+              v-model="search"
+              id="search"
+              type="search"
+              placeholder="Search name..."
+              class="grow py-3 bg-[#202020] px-2 min-[350px]:px-4 rounded-s-lg text-sm lg:text-base"
+              @keyup.enter="searchTitan"
+            >
+            <button
+              class="bg-[#202020] px-3 rounded-e-lg border-s border-s-2 border-[#000000]"
+              @click="searchTitan"
+            >
+                <Icon
+                  icon="bx:search-alt-2"
+                  class="w-6 h-6"
+                />
+            </button>
+        </div>
+
+        <div>
+            <div class="flex justify-center flex-wrap gap-2 md:max-w-lg lg:max-w-xl xl:max-w-2xl md:mx-auto" v-if="showFilters">
+                <Dropdown
+                  v-model="allegiance"
+                  :options="filtersList.allegiancesList"
+                  placeholder="Allegiance"
+                  class="grow md:min-w-sm rounded-lg"
+                  :loading="loading"
+                />
             </div>
             
+            <div class="w-full flex justify-center gap-2 mb-2">
+                <button
+                  class="px-2 py-1 my-1 rounded-lg text-sm"
+                  @click="toggleShowFilters"
+                >
+                    {{ showFilters ? 'Hide Filters' : 'Show Filters'  }} 
+                </button>
     
-            <div v-if="!loading && titans" class="flex flex-col">
-                <div class="py-10 lg:py-20 grid grid-cols-1 sm:grid-cols-3 gap-16 sm:gap-12 xl:gap-20">
-                    <router-link
-                        v-for="titan in titans"
-                        :key="titan.id"
-                        :to="{ name: 'titans-id', params: { id: titan.id } }"
-                    >
-                        <CharacterCard 
-                            :name="titan.name"
-                            :img="titan.img || '' "
-                            :status="titan.status"
-                        />
-                    </router-link>
-                </div>
-    
-                <div class="card md:mx-auto">
-                    <Paginator
-                        :template="{
-                            '640px': 'PrevPageLink CurrentPageReport NextPageLink',
-                            '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
-                            '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
-                        }"
-                        :rows="20"
-                        :totalRecords="pagesInfo.count"
-                        v-model:first="firstItem"
-                        :pageLinkSize="7"
-                        @page="onPaginate"
-                        class="md:max-w-2xl"
-                        >
-                    </Paginator>
-                </div>
-            </div>
-            <div
-                class="w-full py-28 flex justify-center font-montserrat text-lg "
-                v-else
-            >
-                No results found
+                <button
+                  class="px-2 py-1 my-1 rounded-lg text-sm"
+                  @click="clearFilters"
+                  v-if="allegiance || search"
+                >
+                    Clear filters
+                </button>
             </div>
         </div>
-    </Transition>
+        
+
+        <div v-if="!loading && titans" class="flex flex-col">
+            <div class="py-10 lg:py-20 grid grid-cols-1 sm:grid-cols-3 gap-16 sm:gap-12 xl:gap-20">
+                <router-link
+                    v-for="titan in titans"
+                    :key="titan.id"
+                    :to="{ name: 'titans-id', params: { id: titan.id } }"
+                >
+                    <CharacterCard 
+                        :name="titan.name"
+                        :img="titan.img || '' "
+                        :status="titan.status"
+                    />
+                </router-link>
+            </div>
+
+            <div class="card md:mx-auto">
+                <Paginator
+                    :template="{
+                        '640px': 'PrevPageLink CurrentPageReport NextPageLink',
+                        '960px': 'FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink',
+                        '1300px': 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink',
+                    }"
+                    :rows="20"
+                    :totalRecords="pagesInfo.count"
+                    v-model:first="firstItem"
+                    :pageLinkSize="7"
+                    @page="onPaginate"
+                    class="md:max-w-2xl"
+                    >
+                </Paginator>
+            </div>
+        </div>
+
+        
+
+        <div
+          class="w-full py-20 flex justify-center font-montserrat text-lg "
+          v-else-if="loading"
+        >
+            Loading...
+        </div>
+
+        <div
+          class="w-full py-28 flex justify-center font-montserrat text-lg "
+          v-else
+        >
+            No results found
+        </div>
+    </div>
     
 </template>
 
