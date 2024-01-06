@@ -1,6 +1,6 @@
 # AttackOnTitan
 
-This template should help get you started developing with Vue 3 in Vite.
+[Live site](https://klo-attackontitan.netlify.app/home)
 
 ## Recommended IDE Setup
 
